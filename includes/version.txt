@@ -1,0 +1,7 @@
+Version:
+
+
+jQuery: 2.2.4
+BootStrap: 3.3.7
+dataTables: 1.10.12
+bootstrapTables: 1.11.0

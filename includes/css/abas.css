@@ -1,0 +1,54 @@
+@charset "utf-8";
+/* CSS Document */
+.abas li{
+	list-style-type: none;
+	margin-left:3px;
+	margin-top:20px;
+	background:#fff;
+	float:left;
+	border:1px solid #999;
+	border-bottom:0;
+	padding-left:10px;
+	padding-right:10px;
+	border-top-left-radius:12px;
+	border-top-right-radius:12px;
+	-moz-border-radius-topleft:10px;
+	-moz-border-radius-topright:10px;
+	-webkit-border-radius-topleft:10px;
+	-webkit-border-radius-topright:10px;
+}
+
+.abas li#consulta{
+	margin-left:3%;
+}
+
+.consulta a#hover{
+	pointer-events: none;
+}
+
+.abas li a{
+	font-size: 18pt;
+	color: #606060;
+}
+
+.abas li:hover{
+	box-shadow:0 -2px 3px #DFDFDF;
+	-moz-box-shadow:0 -2px 3px #DFDFDF;
+	-webkit-box-shadow:0 -2px 3px #DFDFDF;
+	font-weight:bold;
+	border-color:#c0c0c0;
+}
+
+#aba{
+	position:relative;
+	background:#fff;
+	width:auto;
+	min-height:270px;
+	margin:auto;
+	padding:10px;
+	clear:both;
+	border:1px solid #999;
+	-moz-box-shadow:0 -1px 3px #ccc;
+	-webkit-box-shadow:0 -1px 3px #ccc;
+	border-radius:10px;
+}
