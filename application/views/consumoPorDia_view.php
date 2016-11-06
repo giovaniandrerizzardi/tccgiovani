@@ -2,8 +2,8 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="col-md-10 col-xs-10 col-md-offset-1 " id="borda">
-
-            <div class="col-md-3 col-xs-3" id="borda">
+            <h2><?php echo $this->lang->line('consumodia'); ?></h2>
+            <div class="col-md-4 col-xs-4" id="borda">
 
                 <h4 class="form-signin-heading"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
                 <input id="firstdate" type="date_day" class="form-control" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
@@ -15,7 +15,7 @@
 
             </div>
             <div class="col-md-12 col-xs-12">
-                <div class="col-md-8 col-xs-8" id="borda">
+                <div class="col-md-8 col-xs-8">
                     <div class="col-md-6 col-xs-6">
                         <div id="graficotensao" style="width:100%"></div>
 
@@ -31,7 +31,7 @@
 
 
                 <div class="col-md-4 col-xs-4">
-                    <title> Detalhes do consumo</title>
+                    <h2> Detalhes do consumo</h2>
 
                     <ul class="list-group">
                         <li class="list-group-item">Maior consumo: <a id="maiorconsumo"></a></li>
@@ -74,7 +74,7 @@
 
             //get é um ajax  simplificado, mais simples. onde recebe os dados no data
             $.get('http://localhost/tccgiovani/index.php/consumoPorDia/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
-                alert("oi");
+              
 
                 //preenche a tabela com os dados
 

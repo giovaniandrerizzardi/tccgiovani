@@ -118,7 +118,16 @@ borda na div
 	-webkit-box-shadow:0 -1px 3px #ccc;
 	border-radius:10px;
 }
+/*
+borda na div
+*/
+#borda2{
+	padding:10px;
 
+	border:1px solid #999;
+	
+	border-radius:10px;
+}
 body, html{
     overflow-x: hidden;
 }

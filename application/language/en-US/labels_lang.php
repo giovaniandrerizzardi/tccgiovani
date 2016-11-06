@@ -8,6 +8,7 @@ $lang["insert"] = "Inserir";
 $lang["clean_up"] = "Limpar";
 $lang["cancel"] = "Cancelar";
 $lang["alter"] = "Alterar";
+
 //consumo
 $lang["page_title_consume"] = "Consumo";
 $lang["table_title_consumo"] = "Tabela de consumo";
@@ -15,6 +16,10 @@ $lang["firstDate"] = "De";
 $lang["endDate"] = "Ate";
 $lang["Data"] = "Data";
 $lang["Corrente"] = "Consumo";
+$lang["consumodia"] = "Consumo Dia";
+$lang["consumomes"] = "Consumo Mes/Ano";
+
+
 // monitorameno periodico
 $lang["graficoCorrente"] = " grafico Corrente";
 $lang["graficoTensao"] = " grafico Tensao";
@@ -48,6 +53,7 @@ $lang["date"] = "Data";
 $lang["tensao"] = "Tensão";
 $lang["corrente"] = "Corrente";
 $lang["fatorp"] = "Fator de Potencia";
+$lang["att"] = "Atualizar(s): ";
 //página de login
 $lang["login"] = "Login";
 $lang["email_address"] = "Endereço de Email";

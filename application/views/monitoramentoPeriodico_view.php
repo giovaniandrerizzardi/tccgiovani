@@ -69,7 +69,7 @@
                     <div class="col-md-6 col-xs-6 well">
                         <div class="checkbox">
                             <label>
-                                Periodo: <input id="periodo" type="number"  style="width: 60px;">
+                                Periodo: <input id="periodo" type="number"  value ="5" style="width: 60px;">
                             </label>
                         </div>
                         <div class="radio">

@@ -42,7 +42,7 @@ $CORRENTE_RMS = 0;
 
 
 
-//********funçao de remover dc
+//********funï¿½ao de remover dc
 
 $TENSAO_SEMDC = removeDC($VAL_T_VET);
 $CORRENTE_SEMDC = removeDC($VAL_C_VET);
@@ -88,10 +88,10 @@ if ($totalRows_rsSensor <= 0) { // achou um TP no banco
 
 
 
-//função  converter grandezas de corrente
+//funï¿½ï¿½o  converter grandezas de corrente
 $CORRENTE_GRAND = converterGrandezaC($CORRENTE_SEMDC, $GANHO);
 //echo ' \n conversao de grandeza DE CORRENTE: ' . print_r($CORRENTE_GRAND);
-//*******  funçao de converter grandeza de tensao, com um valor resistorque é estatico a principio.
+//*******  funï¿½ao de converter grandeza de tensao, com um valor resistorque ï¿½ estatico a principio.
 $VALRESISTOR = 224900;
 $TENSAO_GRAND = converterGrandezaT($TENSAO_SEMDC, $ganhosensortensao, $VALRESISTOR);
 //echo ' \n conversao de grandeza DE TENSAO: ' . print_r($TENSAO_GRAND);
@@ -113,7 +113,7 @@ $CORRENTE_RMS = round($CORRENTE_RMS, 2);
 
 echo 'tensao : '.$TENSAO_RMS;
 
-//********** funçao qe calcula FFT
+//********** funï¿½ao qe calcula FFT
 require_once 'FFT.class.php';
 
 $fft = new FFT(64);
@@ -133,76 +133,60 @@ $fourier_array = Fourier($TENSAO_GRAND, 1);
 $ifft = new FFT(64);
 
 //copy results of fft to build a inverse only with 60 Hz [1]
-for ($i = 0; $i < 64; $i++)
-    if ($i == 1)
-       $auxc[$i] = new Complex($FOURRIER_C[$i]->getReal(), $FOURRIER_C[$i]->getImag());
-    else
-       $auxc[$i] = new Complex(0, 0); 
-
-
-//$auxc = $ifft->complexToDouble($auxc);
-//$auxt = $ifft->complexToDouble($auxt);
-
-    /*
-    $auxc[0]=0;
-    $auxt[0]=0;
-for($i=2;$i<64;$i++){
-    $auxc[$i]=0;
-    $auxt[$i]=0;
-    
-}
-     
-    
-$auxc = $ifft->doubleToComplex($auxc);
-$auxt = $ifft->doubleToComplex($auxt);
-*/
-    
-$auxfic=$ifft->ifft($auxc);
+//for ($i = 0; $i < 64; $i++)
+//    if ($i == 1)
+//       $auxc[$i] = new Complex($FOURRIER_C[$i]->getReal(), $FOURRIER_C[$i]->getImag());
+//    else
+//       $auxc[$i] = new Complex(0, 0); 
+//
+//
+//    
+//$auxfic=$ifft->ifft($auxc);
 //$auxfit=$ifft->ifft($auxt);
-
-
-
-$flagc = 0;
-$flagt = 0;
-
-if($auxfic[0]->getReal()>0)$flagc = 1;
-if($auxfic[0]->getReal()>0)$flagt = 1;
-
-
-
-for($i=0;$i<64;$i++){
-    if($flagc = 0){
-  $auxc[$i] = $auxfic[$i]->getReal();
-  if($auxc[$i] > 0){
-      $flagc=$i;
-  }
-    }elseif ($flagc =1) {
-        $auxc[$i] = $auxfic[$i]->getReal();
-         if($auxc[$i] < 0){
-         $flagc=$i;
-  }
-    }
-    if($flagt=0){
-  $auxt = $auxfit[$i]->getReal();
-  if($auxt[$i]>0){
-      $flagt=$i;
-  }
-}elseif ($flagt =1) {
-        $auxt[$i] = $auxfit[$i]->getReal();
-         if($auxt[$i] < 0){
-         $flagt=$i;
-  }
-    }
-
-}
-$dif = $flagc - $flagt;
-$dif2 = $auxfic[$flagc]->getReal() - $auxfit[$flagt]->getReal();
-echo 'consumo: '.$flagc;
-echo 'tensao: '.$flagt;
-echo 'dif: '.$dif. '      ';
-echo 'dif de valor: '.$dif2. '      ';
-
-
+//
+//
+//
+//$flagc = 0;
+//$flagt = 0;
+//
+//if($auxfic[0]->getReal()>0)$flagc = 1;
+//if($auxfic[0]->getReal()>0)$flagt = 1;
+//
+//
+//
+//for($i=0;$i<64;$i++){
+//    if($flagc = 0){
+//  $auxc[$i] = $auxfic[$i]->getReal();
+//  if($auxc[$i] > 0){
+//      $flagc=$i;
+//  }
+//    }elseif ($flagc =1) {
+//        $auxc[$i] = $auxfic[$i]->getReal();
+//         if($auxc[$i] < 0){
+//         $flagc=$i;
+//  }
+//    }
+//    if($flagt=0){
+//  $auxt = $auxfit[$i]->getReal();
+//  if($auxt[$i]>0){
+//      $flagt=$i;
+//  }
+//}elseif ($flagt =1) {
+//        $auxt[$i] = $auxfit[$i]->getReal();
+//         if($auxt[$i] < 0){
+//         $flagt=$i;
+//  }
+//    }
+//
+//}
+//$dif = $flagc - $flagt;
+//$dif2 = $auxfic[$flagc]->getReal() - $auxfit[$flagt]->getReal();
+//echo 'consumo: '.$flagc;
+//echo 'tensao: '.$flagt;
+//echo 'dif: '.$dif. '      ';
+//echo 'dif de valor: '.$dif2. '      ';
+//
+//
 
 
 
@@ -212,7 +196,7 @@ for ($i = 0; $i < count($VAL_T_VET); $i++) {
     $powerc[$i] = $powerc[$i] / $aux;
 //$powert[$i] = sqrt ($FOURRIER_T [$i]->getReal() * $FOURRIER_T [$i]->getReal() +$FOURRIER_T [$i]->getImag() * $FOURRIER_T [$i]->getImag()) / (count($VAL_T_VET) / 2);
 //$powerc[$i] = sqrt ($FOURRIER_C [$i]->getReal() * $FOURRIER_C [$i]->getReal() +$FOURRIER_C [$i]->getImag() * $FOURRIER_C [$i]->getImag()) / (count($VAL_T_VET) / 2);
-//O TESTEEE É O VALOR DO MODULO!!!!!!!!!!  O POWER TBM É O VALOR DO MODULO, NAO SEI O QUE ´R ISSO(HARMONICA)
+//O TESTEEE ï¿½ O VALOR DO MODULO!!!!!!!!!!  O POWER TBM ï¿½ O VALOR DO MODULO, NAO SEI O QUE ï¿½R ISSO(HARMONICA)
 }
 
 //$FI = calculaFi($FOURRIER_T, $FOURRIER_C, $CORRENTE_RMS);
@@ -251,7 +235,6 @@ $dia = $row_dia['DIA'];
 
 echo '  dia : '.$dia;
 echo '  mes : '.$mes;
-
 
 
 

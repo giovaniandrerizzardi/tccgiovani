@@ -29,7 +29,7 @@ public class NovoMain {
     public static void main(String[] args) throws IOException {
         try {
             System.out.println("um primeiro teste");
-            String url = "http://localhost/script/capture.php";
+            String url = "http://localhost/tccgiovani/script/capture.php";
             URL obj;
 
             obj = new URL(url);

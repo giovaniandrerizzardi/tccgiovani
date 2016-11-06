@@ -1,7 +1,10 @@
-// ESQUELETOS DOS GRAFICOS
-// ULTIMO EVENTO - INICIO
-$(document).ready(function () {
-   $('#tensaoteste').highcharts({
+
+   var optionsTF=  {
+                    chart: {
+                        renderTo: 'tensaoteste',
+                        type: 'line',
+                        marginBottom: 25
+                    },
         title: {
             text: 'FO'
         },
@@ -27,9 +30,14 @@ $(document).ready(function () {
        series:[]
 
         
-    });
+    };
     
-       $('#correnteteste').highcharts({
+       var optionsCF=  {
+                    chart: {
+                        renderTo: 'correnteteste',
+                        type: 'line',
+                        marginBottom: 25
+                    },
         title: {
             text: 'FO'
         },
@@ -55,16 +63,18 @@ $(document).ready(function () {
        series:[]
 
         
-    });
+    };
 
     
-
-    $('#barratensao').highcharts({
-		chart: {
-            type: 'column'
-        },
+ var optionsTC=  {
+                    chart: {
+                        renderTo: 'barratensao',
+                        type: 'column',
+                        marginBottom: 25
+                    },
+ 
         title: {
-            text: ''
+            text: 'Harmonicas'
         },
 		credits: {
             enabled: false
@@ -94,15 +104,17 @@ $(document).ready(function () {
             }
         },
         series:[]
-    });
+    };
     
-    
-    $('#barracorrente').highcharts({
-		chart: {
-            type: 'column'
-        },
+    var optionsCC=  {
+                    chart: {
+                        renderTo: 'barracorrente',
+                        type: 'column',
+                        marginBottom: 25
+                    },
+ 
         title: {
-            text: ''
+            text: 'Harmonicas'
         },
 		credits: {
             enabled: false
@@ -132,36 +144,13 @@ $(document).ready(function () {
             }
         },
         series:[]
-    });
+    };
     
     
     // ULTIMO EVENTO - FIM
     
     
     
-    $('#consumodiatensao').highcharts({
-        title: {
-            text: 'Tensao'
-        },
-
-        subtitle: {
-            text: 'Tensão'
-        },
-        yAxis: {
-		
-            title: {
-                text: 'Amperes'
-            }
-        },
-
-          xAxis: {
-        categories: []
-    },
-             
-       series:[]
-
-        
-    });
     
-});
+
     

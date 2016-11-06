@@ -91,9 +91,7 @@
                             ?>      
 
                         </select>
-                        <div>
-                            <input type="text" id="txtRight" />
-                        </div>
+                       
                     </div>
                 </section>
 
@@ -325,7 +323,79 @@
         }
 
         function excluirGrafico() {
-            alert(tipodografico);
+             //grafico
+            var options = {
+                chart: {
+                    renderTo: 'grafico',
+                    type: 'line',
+                    marginBottom: 25
+                },
+                title: {
+                    text: 'GRAFICO',
+                    x: -20 //center
+                },
+//                subtitle: {
+//                    text: 'data',
+//                    x: -20
+//                },
+                xAxis: {
+                    type: 'datetime',
+                    categories: []
+                },
+                yAxis: [{
+                    title: {
+                        text: 'VOLTS'
+                    },
+                    plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#00FF00'
+                        }]
+                }, {
+                     gridLineWidth: 0,
+                    title: {
+                        text: 'AMPERES'
+                    },
+                    plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }],
+                     opposite: true
+                }],
+                legend: {
+                    enabled: false
+                },
+                series: []
+            }
+
+
+
+            //var da series
+            var series = {
+                data: [0],
+                color: 'red',
+                yAxix:1,
+                name:'tensao'
+            };
+           
+            var axix = {
+                categories: [0],
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    month: '%b \'%y'
+                }
+
+            };
+            
+
+
+            //plot do grafico de tensao
+            options.xAxis.categories = axix['categories'];
+            options.series[0] = series;
+           
+            chart = new Highcharts.Chart(options);
+          
         }
 
 
