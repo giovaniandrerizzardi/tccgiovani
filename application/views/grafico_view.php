@@ -91,7 +91,7 @@ var y=0;
             
         
             //get é um ajax  simplificado, mais simples. onde recebe os dados no data
-            $.get('http://localhost/teste/index.php/grafico/atualizagrafico', function (data) {
+            $.get('http://localhost/tccgiovani/index.php/grafico/atualizagrafico', function (data) {
                 //a series e a linha  nova que vai ta no highcrarts, onde eu guardo os valores vindo do php   dentro do series.data     
              
                     

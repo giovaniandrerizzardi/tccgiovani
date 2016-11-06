@@ -122,7 +122,7 @@
             dtfim = $('#enddate').val();
 
             //get é um ajax  simplificado, mais simples. onde recebe os dados no data
-            $.get('http://localhost/teste/index.php/monitoramentoPeriodico/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
+            $.get('http://localhost/tccgiovani/index.php/monitoramentoPeriodico/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
                 data2 = data;
                 $('#tbodyloco').closest('tr').remove();
                 //preenche a tabela com os dados
@@ -195,7 +195,7 @@
                     if ($("#radioDia").is(":checked") == true)
                     tipodata = 'DIA';
                     var periodo = $('#periodo').val();
-                    $.get('http://localhost/teste/index.php/monitoramentoPeriodico/calcula', {inicio: dtinicio, fim: dtfim, agrupador: agrupador, tipodata: tipodata, periodo: periodo, dados: data2}, function (data) {
+                    $.get('http://localhost/tccgiovani/index.php/monitoramentoPeriodico/calcula', {inicio: dtinicio, fim: dtfim, agrupador: agrupador, tipodata: tipodata, periodo: periodo, dados: data2}, function (data) {
                        console.log("VAI TOMA NO tubis 2");
                         }, 'JSON');
 

@@ -73,7 +73,7 @@
             var dtfim = $('#enddate').val();
 
             //get é um ajax  simplificado, mais simples. onde recebe os dados no data
-            $.get('http://localhost/teste/index.php/consumoPorDia/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
+            $.get('http://localhost/tccgiovani/index.php/consumoPorDia/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
                 alert("oi");
 
                 //preenche a tabela com os dados

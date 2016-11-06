@@ -142,7 +142,7 @@
             var dtfim = $('#enddate').val();
 
             //get é um ajax  simplificado, mais simples. onde recebe os dados no data
-            $.get('http://localhost/teste/index.php/eventoDetalhado/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
+            $.get('http://localhost/tccgiovani/index.php/eventoDetalhado/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
                 data2 = data;
                 $('#tbodyloco').closest('tr').remove();
                 //preenche a tabela com os dados
@@ -200,22 +200,20 @@
 //            $('#tbodyloco').html(html);
 //            $('table').DataTable();
 
-                var array={
-                    descricao:'k',
-                    quantidade:3
-                }
-                $.each(data.dado, function (key, value) {
-                  var id = '#' + value.DESCRICAO;
-                  //colocar os valores dentro do array ali dps  so  monta  o  jeito de mostra
-                   $(id).val(data.dado.quantidade);
-                };
+
                 
-                $('#totaltensao').val(data.dados.maiorcorrente);
-                $('#totalcorrente').val(data.dados.menorcorrente);
-                $('#maiortensao').val(data.dados.maiortensao);
-                $('#menortensao').val(data.dados.menortensao);
-                $('#maiorcorrente').val(data.dados.maiortensao);
-                $('#menorcorrente').val(data.dados.menortensao);
+                
+                $.each(data.tipos, function (key, value) {
+                  var id = '#' + value.DESCRICAO;
+                   $(id).html(value.quantidade);  
+                });
+                
+                $('#totaltensao').html(data.dados.totaltensao);
+                $('#totalcorrente').html(data.dados.totalcorrente);
+                $('#maiortensao').html(data.dados.maiortensao);
+                $('#menortensao').html(data.dados.menortensao);
+                $('#maiorcorrente').html(data.dados.maiorcorrente);
+                $('#menorcorrente').html(data.dados.menorcorrente);
 
 
             }, 'JSON');
@@ -235,7 +233,7 @@
                     marginBottom: 25
                 },
                 title: {
-                    text: 'NOME DO GRAFICO',
+                    text: 'GRAFICO',
                     x: -20 //center
                 },
 //                subtitle: {
@@ -246,16 +244,27 @@
                     type: 'datetime',
                     categories: []
                 },
-                yAxis: {
+                yAxis: [{
                     title: {
-                        text: 'SUBTITULO'
+                        text: 'VOLTS'
+                    },
+                    plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#00FF00'
+                        }]
+                }, {
+                     gridLineWidth: 0,
+                    title: {
+                        text: 'AMPERES'
                     },
                     plotLines: [{
                             value: 0,
                             width: 1,
                             color: '#808080'
-                        }]
-                },
+                        }],
+                     opposite: true
+                }],
                 legend: {
                     enabled: false
                 },
@@ -267,8 +276,11 @@
             //var da series
             var series = {
                 data: [],
-                color: 'red'
-            }
+                color: 'red',
+                yAxix:1,
+                name:'tensao'
+            };
+           
             var axix = {
                 categories: [],
                 type: 'datetime',
@@ -276,26 +288,38 @@
                     month: '%b \'%y'
                 }
 
-            }
-
+            };
+            var tipodescircao;
             $.each(data2.dado, function () {
                 // console.log(tipodografico);
+                console.log(this.TENSAO_RMS);
                 if (this.DESCRICAO === tipodografico) {
-
-
+                    
+                    tipodescircao = this.MEDIDOR;
                     // alert(this.toString());
 
                     series.data.push(parseFloat(this.TENSAO_RMS));
                     axix.categories.push(this.DATAHORA);
-                    console.log(this.DESCRICAO);
+                    
                 }
 
             });
 
+            if(tipodescircao === 'VOLT'){
+                console.log('aki1');
+                series.yAxix = 1;
+                series.name='tensao';
+            }else {
+                console.log('aki2');
+                series.yAxix = 2;
+                series.color = 'blue';
+                series.name='corrente'
+            }
 
             //plot do grafico de tensao
             options.xAxis.categories = axix['categories'];
             options.series[0] = series;
+           
             chart = new Highcharts.Chart(options);
 
         }

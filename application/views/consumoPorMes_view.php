@@ -78,7 +78,7 @@ $(document).ready(function () {
         console.log(dtfim);
 
         //get é um ajax  simplificado, mais simples. onde recebe os dados no data
-        $.get('http://localhost/teste/index.php/consumoPorMes/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
+        $.get('http://localhost/tccgiovani/index.php/consumoPorMes/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
             
 
             //preenche a tabela com os dados

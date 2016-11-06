@@ -9,7 +9,7 @@ class eventoDetalhado_model extends CI_Model {
 
     
      function getDados($inicio,$fim) {
-             $this->db->select("C.DATAHORA,T.DESCRICAO,C.TENSAO_RMS,C.CORRENTE_RMS,C.FI");
+             $this->db->select("C.DATAHORA,T.DESCRICAO,T.MEDIDOR,C.TENSAO_RMS,C.CORRENTE_RMS,C.FI");
 		$this->db->from ('COLETA C, TIPO_EVENTO T');
                 $this->db->where('C.TIPO_EVENTO_CODIGO_EVT = T.CODIGO_EVT');
                 $this->db->where('DATAHORA >=', $inicio);
