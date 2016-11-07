@@ -130,8 +130,15 @@ $fourier_array = Fourier($TENSAO_GRAND, 1);
 
 //$auxt=$FOURRIER_T;
 //$auxc=$FOURRIER_C;
-$ifft = new FFT(64);
+//$ifft = new FFT(64);
 
+
+
+$phi = atan($FOURRIER_T[1]->getImag()/ $FOURRIER_T[1]->getReal())- atan($FOURRIER_C[1]->getImag()/ $FOURRIER_C[1]->getReal());
+
+echo 'phi = '.$phi;
+
+exit;
 //copy results of fft to build a inverse only with 60 Hz [1]
 //for ($i = 0; $i < 64; $i++)
 //    if ($i == 1)

@@ -32,29 +32,32 @@ class monitoramentoPeriodico extends MY_Controller {
 
 
         $retorno['dado'] = $this->monitoramentoPeriodico_model->getMon($dtinicio, $dtfim);
-        
-          
-          
-         
+
+
+
+
 
         echo json_encode($retorno);
         exit;
     }
 
     function calcula() {
-        $agrupador = $_GET['agrupador'];
-        $tipodata = $_GET['tipodata'];
-        $periodo = $_GET['periodo'];
-        $data= $_GET['data'];
-        $dtinicio = $_GET['inicio'];
-        $dtfim = $_GET['fim'];
-//        $dtinicio = '2016-10-01 11:24:26';
-//        $dtfim = '2016-11-02 02:23:33';
-//        $agrupador = "MAIOR";
-//        $tipodata = "DAY";
-//        $periodo = 5;
-//        $data = $this->monitoramentoPeriodico_model->getMon($dtinicio, $dtfim);
-
+        $debug = false;
+        if (!$debug) {
+            $agrupador = $_GET['agrupador'];
+            $tipodata = $_GET['tipodata'];
+            $periodo = $_GET['periodo'];
+            $data = $_GET['data'];
+            $dtinicio = $_GET['inicio'];
+            $dtfim = $_GET['fim'];
+        } else {
+            $dtinicio = '2016-10-01 11:24:26';
+            $dtfim = '2016-11-02 02:23:33';
+            $agrupador = "MAIOR";
+            $tipodata = "HORA";
+            $periodo = 5;
+            $data = $this->monitoramentoPeriodico_model->getMon($dtinicio, $dtfim);
+        }
         if ($tipodata == "MINUTO") {
             $tipodate = "minutes";
         } elseif ($tipodata == "HORA") {
@@ -77,7 +80,7 @@ class monitoramentoPeriodico extends MY_Controller {
         echo 'data fim antiga:' . $fim;
         $x = 0;
         $contador = 0;
-       
+
         $respostaCorrente[0] = 0;
         $respostaTensao[0] = 0;
         $resposta['data'][0] = 0;
@@ -126,8 +129,8 @@ class monitoramentoPeriodico extends MY_Controller {
                         $respostaTensao[$x] = $respostaTensao[$x] / $contador;
                         $contador = 0;
                         $x++;
-                         
-                         
+                        $respostaTensao[$x] = 0;
+                        $respostaCorrente[$x] = 0;
                     }
 
 
@@ -164,9 +167,9 @@ class monitoramentoPeriodico extends MY_Controller {
                     }
 
                     echo '    esta fora do limite';
-
-
                     $x++;
+                    $respostaTensao[$x] = 0;
+                    $respostaCorrente[$x] = 0;
                 }
             }
         } else {
@@ -198,9 +201,9 @@ class monitoramentoPeriodico extends MY_Controller {
                     }
 
                     echo '    esta fora do limite';
-
-
                     $x++;
+                    $respostaTensao[$x] = 0;
+                    $respostaCorrente[$x] = 0;
                 }
             }
         }
@@ -209,7 +212,7 @@ class monitoramentoPeriodico extends MY_Controller {
         $resposta['tensao'] = $respostaTensao;
         $resposta['corrente'] = $respostaCorrente;
         print_r($resposta);
-         echo json_encode($resposta);
+        echo json_encode($resposta);
         exit;
     }
 
