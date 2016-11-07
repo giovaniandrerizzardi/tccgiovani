@@ -295,6 +295,17 @@ mysql_close();
             if (!mysqli_query($connect, $insertconsumoSQL)) {
                 $erro=2;
             }
+            
+            $addconsumoDia = sprintf("update consumodia set KW = KW + %s,DELTA_T = DELTA_T + %s where DIA ='%s'", round(GetSQLValueString($kwconsumo, 'double'),2),round(GetSQLValueString($TENSAO_RMS, 'double'),2),$dia);
+            if (!mysqli_query($connect, $addconsumoDia)) {
+                $erro=33;
+            }
+           
+             $addconsumoMes = sprintf("update consumomes set KW = KW + %s,DETLA_T = DETLA_T + %s where MES ='%s'", round(GetSQLValueString($kwconsumo, 'double'),2),round(GetSQLValueString($TENSAO_RMS, 'double'),2),$mes);
+            if (!mysqli_query($connect, $addconsumoMes)) {
+                $erro=44;
+            }
+            
         }
 
 
