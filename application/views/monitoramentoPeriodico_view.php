@@ -31,8 +31,8 @@
             <div class="col-md-6 col-xs-6" id="tabelaDireita">
                 <div class="col-md-12 col-xs-12" id="borda">
 
-                    <label class="radio-inline"><input id="grafico_Corrente" type="radio" name="optradio"><?php echo $this->lang->line('graficoCorrente'); ?></label>
-                    <label class="radio-inline"><input id="grafico_Tensao" type="radio" name="optradio"><?php echo $this->lang->line('graficoTensao'); ?></label>
+                    <label class="radio-inline"><input id="grafico_Corrente" type="radio" name="optradiort"><?php echo $this->lang->line('graficoCorrente'); ?></label>
+                    <label class="radio-inline"><input id="grafico_Tensao" type="radio" name="optradiort"><?php echo $this->lang->line('graficoTensao'); ?></label>
 
                 </div>
                 <div class="col-md-12 col-xs-12" id="borda">
@@ -176,33 +176,55 @@
 
 
         $('#attbutton').click(function () {
-           
+            console.log("foi 1");
             if ($("#agruparValores").is(":checked") == true) {
-            if ($("#radioMedia").is(":checked") == true)
+                console.log("foi 11");
+                if ($("#radioMedia").is(":checked") == true)
                     agrupador = 'MEDIA';
-                    else
-                    if ($("#radioMaior").is(":checked") == true)
+                else
+                if ($("#radioMaior").is(":checked") == true)
                     agrupador = 'MAIOR';
-                    else
-                    if ($("#radioMenor").is(":checked") == true)
+                else
+                if ($("#radioMenor").is(":checked") == true)
                     agrupador = 'MENOR';
-                    if ($("#radioMinuto").is(":checked") == true)
+                if ($("#radioMinuto").is(":checked") == true)
                     tipodata = 'MINUTO';
-                    else
-                    if ($("#radioHora").is(":checked") == true)
+                else
+                if ($("#radioHora").is(":checked") == true)
                     tipodata = 'HORA';
-                    else
-                    if ($("#radioDia").is(":checked") == true)
+                else
+                if ($("#radioDia").is(":checked") == true)
                     tipodata = 'DIA';
-                    var periodo = $('#periodo').val();
-                    $.get('http://localhost/tccgiovani/index.php/monitoramentoPeriodico/calcula', {inicio: dtinicio, fim: dtfim, agrupador: agrupador, tipodata: tipodata, periodo: periodo, dados: data2}, function (data) {
-                       console.log("VAI TOMA NO tubis 2");
-                        }, 'JSON');
+                var periodo = $('#periodo').val();
+                console.log('chegou');
+                var aux = {
+                    inicio: dtinicio,
+                    fim: dtfim,
+                    agrupador: agrupador,
+                    tipodata: tipodata,
+                    periodo: periodo,
+                    dados: data2
+                }
 
-                    } else {
-                    alert("selecione a opção Agrupar Valores!");
-                    }
+                // console.log(aux);
+                $.get('/tccgiovani/index.php/monitoramentoPeriodico/calcula', aux, function (data) {
+                    console.log("foi 2");
+                    console.log(data);
+                    data2.dado = data;
+                      geraGraficoCorrente();
+//                    if ($("#grafico_Corrente").is(":checked") == true) {
+//                        geraGraficoCorrente();
+//                    }
+//                    if ($("#grafico_Tensao").is(":checked") == true) {
+//                        geraGraficoTensao();
+//                    }
+
                 });
+
+            } else {
+                alert("selecione a opção Agrupar Valores!");
+            }
+        });
 
 
 
@@ -350,9 +372,6 @@
 
                 series.data.push(parseFloat(this.CORRENTE_RMS));
                 axix.categories.push(this.DATAHORA);
-
-
-
             });
 
 

@@ -47,7 +47,7 @@ class monitoramentoPeriodico extends MY_Controller {
             $agrupador = $_GET['agrupador'];
             $tipodata = $_GET['tipodata'];
             $periodo = $_GET['periodo'];
-            $data = $_GET['data'];
+            $data = $_GET['dados'];
             $dtinicio = $_GET['inicio'];
             $dtfim = $_GET['fim'];
         } else {
@@ -69,15 +69,15 @@ class monitoramentoPeriodico extends MY_Controller {
 
         $inicio = new DateTime($dtinicio);
 
-        echo 'tipo data = ' . $tipodate;
+        //echo 'tipo data = ' . $tipodate;
         $inicio = date('Y/m/d H:i:s', strtotime($dtinicio));
         $fim = date('Y/m/d H:i:s', strtotime($dtinicio . " +{$periodo} {$tipodate}"));
 
 
 
-        echo 'data inicio:' . $inicio;
+        //echo 'data inicio:' . $inicio;
 
-        echo 'data fim antiga:' . $fim;
+        //echo 'data fim antiga:' . $fim;
         $x = 0;
         $contador = 0;
 
@@ -90,23 +90,23 @@ class monitoramentoPeriodico extends MY_Controller {
 
 
 
-            foreach ($data as $key => $value) {
+            foreach ($data['dado'] as $key => $value) {
                 //auxdata vai pega  a data do dado e testa se ele ta dentro do limite(flag true), ai vai fazer a media
-                $auxdata = new DateTime($value->DATAHORA);
+                $auxdata = new DateTime($value['DATAHORA']);
                 $auxdata = $auxdata->format("Y/m/d H:i:s");
                 $flag = FALSE;
-                echo '<br>  valor do auxdata= ' . $auxdata;
-                echo '  valor de inicio= ' . $inicio;
-                echo '  valor de fim= ' . $fim;
-
+//                echo '<br>  valor do auxdata= ' . $auxdata;
+//                echo '  valor de inicio= ' . $inicio;
+//                echo '  valor de fim= ' . $fim;
+                
                 if ($auxdata >= $inicio && $auxdata < $fim)
                     $flag = TRUE;
                 if ($flag == TRUE) {
                     if ($contador == 0)
-                        $resposta['data'][$x] = $value->DATAHORA;
+                        $resposta['data'][$x] = $value['DATAHORA'];
 
-                    $respostaTensao[$x] = $respostaTensao[$x] + $value->TENSAO_RMS;
-                    $respostaCorrente[$x] = $respostaCorrente[$x] + $value->CORRENTE_RMS;
+                    $respostaTensao[$x] = $respostaTensao[$x] + $value['TENSAO_RMS'];
+                    $respostaCorrente[$x] = $respostaCorrente[$x] + $value['CORRENTE_RMS'];
                     $contador++;
                     if ($value == end($data) && $flag == TRUE) {
                         //ultima key
@@ -115,16 +115,16 @@ class monitoramentoPeriodico extends MY_Controller {
                         $respostaTensao[$x] = $respostaTensao[$x] / $contador;
                         break;
                     }
-                    echo '   esta dentro do limite com contador = ' . $contador;
+//                    echo '   esta dentro do limite com contador = ' . $contador;
                 } else {
                     while ($auxdata < $inicio || $auxdata > $fim) {
                         $inicio = date('Y/m/d H:i:s', strtotime($fim));
                         $fim = date('Y/m/d H:i:s', strtotime($fim . " +{$periodo} {$tipodate}"));
                     }
 
-                    echo '    esta fora do limite';
+//                    echo '    esta fora do limite';
                     if ($contador != 0) {
-                        echo '  dassads contador = ' . $contador;
+//                        echo '  dassads contador = ' . $contador;
                         $respostaCorrente[$x] = $respostaCorrente[$x] / $contador;
                         $respostaTensao[$x] = $respostaTensao[$x] / $contador;
                         $contador = 0;
@@ -134,39 +134,39 @@ class monitoramentoPeriodico extends MY_Controller {
                     }
 
 
-                    echo 'contador e zero';
+//                    echo 'contador e zero';
                 }
             }
         } elseif ($agrupador == "MAIOR") {
 
             foreach ($data as $key => $value) {
                 //auxdata vai pega  a data do dado e testa se ele ta dentro do limite(flag true), ai vai fazer a media
-                $auxdata = new DateTime($value->DATAHORA);
+                $auxdata = new DateTime($value['DATAHORA']);
                 $auxdata = $auxdata->format("Y/m/d H:i:s");
                 $flag = FALSE;
-                echo '<br>  valor do auxdata= ' . $auxdata;
-                echo '  valor de inicio= ' . $inicio;
-                echo '  valor de fim= ' . $fim;
+//                echo '<br>  valor do auxdata= ' . $auxdata;
+//                echo '  valor de inicio= ' . $inicio;
+//                echo '  valor de fim= ' . $fim;
 
                 if ($auxdata >= $inicio && $auxdata < $fim)
                     $flag = TRUE;
                 if ($flag == TRUE) {
 
-                    if ($value->TENSAO_RMS > $respostaTensao[$x]) {
-                        $respostaTensao[$x] = $value->TENSAO_RMS;
-                        $respostaCorrente[$x] = $value->CORRENTE_RMS;
-                        $resposta['data'][$x] = $value->DATAHORA;
+                    if ($value['TENSAO_RMS'] > $respostaTensao[$x]) {
+                        $respostaTensao[$x] = $value['TENSAO_RMS'];
+                        $respostaCorrente[$x] = $value['CORRENTE_RMS'];
+                        $resposta['data'][$x] = $value['DATAHORA'];
                         echo '  ***temos um novo maior: ' . $respostaTensao[$x];
                     }
 
-                    echo '   esta dentro do limite com contador = ' . $contador;
+//                    echo '   esta dentro do limite com contador = ' . $contador;
                 } else {
                     while ($auxdata < $inicio || $auxdata > $fim) {
                         $inicio = date('Y/m/d H:i:s', strtotime($fim));
                         $fim = date('Y/m/d H:i:s', strtotime($fim . " +{$periodo} {$tipodate}"));
                     }
 
-                    echo '    esta fora do limite';
+//                    echo '    esta fora do limite';
                     $x++;
                     $respostaTensao[$x] = 0;
                     $respostaCorrente[$x] = 0;
@@ -175,32 +175,32 @@ class monitoramentoPeriodico extends MY_Controller {
         } else {
             foreach ($data as $key => $value) {
                 //auxdata vai pega  a data do dado e testa se ele ta dentro do limite(flag true), ai vai fazer a media
-                $auxdata = new DateTime($value->DATAHORA);
+                $auxdata = new DateTime($value['DATAHORA']);
                 $auxdata = $auxdata->format("Y/m/d H:i:s");
                 $flag = FALSE;
-                echo '<br>  valor do auxdata= ' . $auxdata;
-                echo '  valor de inicio= ' . $inicio;
-                echo '  valor de fim= ' . $fim;
+//                echo '<br>  valor do auxdata= ' . $auxdata;
+//                echo '  valor de inicio= ' . $inicio;
+//                echo '  valor de fim= ' . $fim;
 
                 if ($auxdata >= $inicio && $auxdata < $fim)
                     $flag = TRUE;
                 if ($flag == TRUE) {
 
-                    if ($value->TENSAO_RMS < $respostaTensao[$x]) {
-                        $respostaTensao[$x] = $value->TENSAO_RMS;
-                        $respostaCorrente[$x] = $value->CORRENTE_RMS;
-                        $resposta['data'][$x] = $value->DATAHORA;
-                        echo '  ***temos um novo maior: ' . $respostaTensao[$x];
+                    if ($value['TENSAO_RMS'] < $respostaTensao[$x]) {
+                        $respostaTensao[$x] = $value['TENSAO_RMS'];
+                        $respostaCorrente[$x] = $value['CORRENTE_RMS'];
+                        $resposta['data'][$x] = $value['DATAHORA'];
+//                        echo '  ***temos um novo maior: ' . $respostaTensao[$x];
                     }
 
-                    echo '   esta dentro do limite com contador = ' . $contador;
+//                    echo '   esta dentro do limite com contador = ' . $contador;
                 } elseif ($agrupador == "MENOR") {
                     while ($auxdata < $inicio || $auxdata > $fim) {
                         $inicio = date('Y/m/d H:i:s', strtotime($fim));
                         $fim = date('Y/m/d H:i:s', strtotime($fim . " +{$periodo} {$tipodate}"));
                     }
 
-                    echo '    esta fora do limite';
+//                    echo '    esta fora do limite';
                     $x++;
                     $respostaTensao[$x] = 0;
                     $respostaCorrente[$x] = 0;
@@ -208,14 +208,14 @@ class monitoramentoPeriodico extends MY_Controller {
             }
         }
 
-        echo 'a VAI TOMA NO CU! ';
+
         $resposta['tensao'] = $respostaTensao;
         $resposta['corrente'] = $respostaCorrente;
-        print_r($resposta);
+       // print_r($resposta);
         echo json_encode($resposta);
         exit;
     }
 
-//        
+      
     // fazer o esquema do caderno, unico jeito  viavel
 }
