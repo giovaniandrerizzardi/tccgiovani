@@ -48,13 +48,11 @@ $lang["evtdetalhado"] = "Detalhe dos eventos";
 //ultimo evento
 $lang["ultevt"] = "Ultimo Evento";
 $lang["caracteristica"] = "Caracteristicas";
-$lang["tipo"] = "Tipo";
 $lang["valor"] = "Valores";
 $lang["date"] = "Data";
 $lang["tensao"] = "Tensão";
 $lang["corrente"] = "Corrente";
 $lang["fatorp"] = "Fator de Potencia";
-$lang["potencia"] = "Potencia W";
 $lang["att"] = "Atualizar(s): ";
 //página de login
 $lang["login"] = "Login";
