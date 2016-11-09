@@ -10,8 +10,9 @@ class grafico_model extends CI_Model {
     function get_coleta() {
        
        		$this->db->select("*");
-		$this->db->from ('coleta');
-		$this->db->order_by('COLETA_COD','desc');
+		$this->db->from ('coleta c, tipo_evento t');
+                   $this->db->where('c.TIPO_EVENTO_CODIGO_EVT = t.CODIGO_EVT');
+		$this->db->order_by('c.COLETA_COD','desc');
                 $this->db->limit(1);
 		$query = $this->db->get()->result_array();
 
