@@ -76,19 +76,16 @@ class monitoramentoPeriodico extends MY_Controller {
 
 
         //echo 'data inicio:' . $inicio;
-
         //echo 'data fim antiga:' . $fim;
         $x = 0;
         $contador = 0;
-
+        $outrocontador = 0;
         $respostaCorrente[0] = 0;
         $respostaTensao[0] = 0;
-        $resposta['data'][0] = 0;
+        $resposta['datahora'][0] = 0;
 
 
         if ($agrupador === "MEDIA") {
-
-
 
             foreach ($data['dado'] as $key => $value) {
                 //auxdata vai pega  a data do dado e testa se ele ta dentro do limite(flag true), ai vai fazer a media
@@ -98,12 +95,12 @@ class monitoramentoPeriodico extends MY_Controller {
 //                echo '<br>  valor do auxdata= ' . $auxdata;
 //                echo '  valor de inicio= ' . $inicio;
 //                echo '  valor de fim= ' . $fim;
-                
+
                 if ($auxdata >= $inicio && $auxdata < $fim)
                     $flag = TRUE;
                 if ($flag == TRUE) {
                     if ($contador == 0)
-                        $resposta['data'][$x] = $value['DATAHORA'];
+                        $resposta['datahora'][$x] = $value['DATAHORA'];
 
                     $respostaTensao[$x] = $respostaTensao[$x] + $value['TENSAO_RMS'];
                     $respostaCorrente[$x] = $respostaCorrente[$x] + $value['CORRENTE_RMS'];
@@ -113,6 +110,7 @@ class monitoramentoPeriodico extends MY_Controller {
                         echo 'lastkey';
                         $respostaCorrente[$x] = $respostaCorrente[$x] / $contador;
                         $respostaTensao[$x] = $respostaTensao[$x] / $contador;
+                         $outrocontador++;
                         break;
                     }
 //                    echo '   esta dentro do limite com contador = ' . $contador;
@@ -129,6 +127,7 @@ class monitoramentoPeriodico extends MY_Controller {
                         $respostaTensao[$x] = $respostaTensao[$x] / $contador;
                         $contador = 0;
                         $x++;
+                        $outrocontador++;
                         $respostaTensao[$x] = 0;
                         $respostaCorrente[$x] = 0;
                     }
@@ -139,7 +138,7 @@ class monitoramentoPeriodico extends MY_Controller {
             }
         } elseif ($agrupador == "MAIOR") {
 
-            foreach ($data as $key => $value) {
+            foreach ($data['dado'] as $key => $value) {
                 //auxdata vai pega  a data do dado e testa se ele ta dentro do limite(flag true), ai vai fazer a media
                 $auxdata = new DateTime($value['DATAHORA']);
                 $auxdata = $auxdata->format("Y/m/d H:i:s");
@@ -152,11 +151,11 @@ class monitoramentoPeriodico extends MY_Controller {
                     $flag = TRUE;
                 if ($flag == TRUE) {
 
-                    if ($value['TENSAO_RMS'] > $respostaTensao[$x]) {
+                    if ($value['TENSAO_RMS'] >= $respostaTensao[$x]) {
                         $respostaTensao[$x] = $value['TENSAO_RMS'];
                         $respostaCorrente[$x] = $value['CORRENTE_RMS'];
-                        $resposta['data'][$x] = $value['DATAHORA'];
-                        echo '  ***temos um novo maior: ' . $respostaTensao[$x];
+                        $resposta['datahora'][$x] = $value['DATAHORA'];
+                     //   echo '  ***temos um novo maior: ' . $respostaTensao[$x];
                     }
 
 //                    echo '   esta dentro do limite com contador = ' . $contador;
@@ -170,11 +169,13 @@ class monitoramentoPeriodico extends MY_Controller {
                     $x++;
                     $respostaTensao[$x] = 0;
                     $respostaCorrente[$x] = 0;
+                    $resposta['datahora'][$x] = 0;
                 }
             }
-        } else {
-            foreach ($data as $key => $value) {
-                //auxdata vai pega  a data do dado e testa se ele ta dentro do limite(flag true), ai vai fazer a media
+             $outrocontador = $x;
+         } elseif ($agrupador == "MENOR") {
+            foreach ($data['dado'] as $key => $value) {
+                //auxdata vai pega  a data do dado e testa se ele ta dentro do limite(flag true), ai vai fazer a menor
                 $auxdata = new DateTime($value['DATAHORA']);
                 $auxdata = $auxdata->format("Y/m/d H:i:s");
                 $flag = FALSE;
@@ -186,10 +187,10 @@ class monitoramentoPeriodico extends MY_Controller {
                     $flag = TRUE;
                 if ($flag == TRUE) {
 
-                    if ($value['TENSAO_RMS'] < $respostaTensao[$x]) {
+                    if ($value['TENSAO_RMS'] <= $respostaTensao[$x]) {
                         $respostaTensao[$x] = $value['TENSAO_RMS'];
                         $respostaCorrente[$x] = $value['CORRENTE_RMS'];
-                        $resposta['data'][$x] = $value['DATAHORA'];
+                        $resposta['datahora'][$x] = $value['DATAHORA'];
 //                        echo '  ***temos um novo maior: ' . $respostaTensao[$x];
                     }
 
@@ -202,20 +203,37 @@ class monitoramentoPeriodico extends MY_Controller {
 
 //                    echo '    esta fora do limite';
                     $x++;
-                    $respostaTensao[$x] = 0;
-                    $respostaCorrente[$x] = 0;
+                    $respostaTensao[$x] = $value['TENSAO_RMS'];
+                    $respostaCorrente[$x] = $value['CORRENTE_RMS'];
+                    $resposta['datahora'][$x] = $value['DATAHORA'];
                 }
             }
+             $outrocontador = $x;
         }
+        
+        for ($i = 0; $i < $outrocontador; $i++) {
 
-
-        $resposta['tensao'] = $respostaTensao;
-        $resposta['corrente'] = $respostaCorrente;
-       // print_r($resposta);
-        echo json_encode($resposta);
+            $resp['dado'][$i]['TENSAO_RMS'] = $respostaTensao[$i];
+            $resp['dado'][$i]['CORRENTE_RMS'] = $respostaCorrente[$i];
+            $resp['dado'][$i]['DATAHORA'] = $resposta['datahora'][$i];
+        }
+       
+      
+  
+        echo json_encode($resp);
         exit;
     }
 
-      
+    
+    
+    
+    
+    function attAutomatica() {
+        $data = $this->monitoramentoPeriodico_model->attAut();
+
+        echo json_encode($data);
+        exit;
+    }
+
     // fazer o esquema do caderno, unico jeito  viavel
 }

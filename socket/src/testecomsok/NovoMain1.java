@@ -27,7 +27,7 @@ public class NovoMain1 {
     public static void main(String[] args) throws IOException {
         try {
             System.out.println("um primeiro teste");
-            String url = "http://localhost/script/monitoramentoPC.php";
+            String url = "http://localhost/tccgiovani/script/monitoramentoPC.php";
             URL obj;
 
             obj = new URL(url);

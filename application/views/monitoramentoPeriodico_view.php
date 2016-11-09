@@ -45,7 +45,7 @@
 
                     <div class="checkbox">
                         <label>
-                            valor no grafico: <input id="valoresNoGrafico" type="number" style="width: 60px;">
+                            valor no grafico: <input id="valoresNoGrafico" type="number"  value ="15" style="width: 60px;">
                         </label>
                     </div>
 
@@ -69,7 +69,7 @@
                     <div class="col-md-6 col-xs-6 well">
                         <div class="checkbox">
                             <label>
-                                Periodo: <input id="periodo" type="number"  value ="5" style="width: 60px;">
+                                Periodo: <input id="periodo" type="number"  value ="5" name="che" style="width: 60px;">
                             </label>
                         </div>
                         <div class="radio">
@@ -81,7 +81,7 @@
                         <div class="radio">
                             <label><input id="radioDia" type="radio" name="optradio2">Dia</label>
                         </div>
-                        <button id="attbutton" type="button">atualizar!</button>
+                        <button id="attbutton" type="button"  name="che">atualizar!</button>
 
                     </div>
 
@@ -110,7 +110,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var data2;
+        var dataImp;
+        var dataagroup;
+        var valnografico = 15;
         var tipodografico;
         var table = $('table').DataTable();
         var agrupador;//  tipo de agrupamento maior menor ou media
@@ -122,8 +124,8 @@
             dtfim = $('#enddate').val();
 
             //get é um ajax  simplificado, mais simples. onde recebe os dados no data
-            $.get('http://localhost/tccgiovani/index.php/monitoramentoPeriodico/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
-                data2 = data;
+          $.get('http://localhost/tccgiovani/index.php/monitoramentoPeriodico/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
+                dataImp = data;
                 $('#tbodyloco').closest('tr').remove();
                 //preenche a tabela com os dados
                 var html = '';
@@ -149,10 +151,18 @@
 
         });
 
-
+ $('#valoresNoGrafico').change(function () {
+          valnografico =  $('#valoresNoGrafico').val();
+          console.log(valnografico);
+        });
+        
+        
+        
         $('#grafico_Corrente').change(function () {
-            if ($("#grafico_Corrente").is(":checked") == true) {
-                geraGraficoCorrente();
+            if ($("#grafico_Corrente").is(":checked") == true && $("#agruparValores").is(":checked") == true) {
+                geraGraficoCorrente(dataagroup);
+            }else{
+                geraGraficoCorrente(dataImp);
             }
 
 
@@ -160,17 +170,15 @@
 
 
         $('#grafico_Tensao').change(function () {
-            if ($("#grafico_Tensao").is(":checked") == true) {
-                geraGraficoTensao();
+            if ($("#grafico_Tensao").is(":checked") == true && $("#agruparValores").is(":checked") == true) {
+                geraGraficoTensao(dataagroup);
+            }else{
+                geraGraficoTensao(dataImp);
             }
 
 
 
         });
-
-
-
-        //**************************************************************************
 
 
 
@@ -203,23 +211,21 @@
                     agrupador: agrupador,
                     tipodata: tipodata,
                     periodo: periodo,
-                    dados: data2
+                    dados: dataImp
                 }
 
-                // console.log(aux);
+                 console.log(aux);
                 $.get('/tccgiovani/index.php/monitoramentoPeriodico/calcula', aux, function (data) {
                     console.log("foi 2");
-                    console.log(data);
-                    data2.dado = data;
-                      geraGraficoCorrente();
-//                    if ($("#grafico_Corrente").is(":checked") == true) {
-//                        geraGraficoCorrente();
-//                    }
-//                    if ($("#grafico_Tensao").is(":checked") == true) {
-//                        geraGraficoTensao();
-//                    }
+                   dataagroup=data;
+                    if ($("#grafico_Tensao").is(":checked") == true) {
+                        geraGraficoTensao(data);
+                    }
+                    if ($("#grafico_Corrente").is(":checked") == true) {
+                        geraGraficoCorrente(data);
+                    }
 
-                });
+                }, 'JSON');
 
             } else {
                 alert("selecione a opção Agrupar Valores!");
@@ -238,7 +244,7 @@
 
 
 
-        function geraGraficoTensao() {
+        function geraGraficoTensao(data2) {
 
             //grafico
             var options = {
@@ -286,22 +292,14 @@
                 }
 
             }
-
-
-            $.each(data2.dado, function () {
-
-                series.data.push(parseFloat(this.TENSAO_RMS));
-                axix.categories.push(this.DATAHORA);
-
-            });
-
-
+            var aux = 0;
 
             $.each(data2.dado, function () {
-
+                if(aux !== valnografico){
                 series.data.push(parseFloat(this.TENSAO_RMS));
                 axix.categories.push(this.DATAHORA);
-
+                aux++;
+            }
             });
 
 
@@ -314,7 +312,7 @@
 
 
 
-        function geraGraficoCorrente() {
+        function geraGraficoCorrente(data2) {
 
 
             //grafico
@@ -367,11 +365,13 @@
                 }
 
             }
-
+            var aux = 0;
             $.each(data2.dado, function () {
-
+                if(aux !== valnografico){
                 series.data.push(parseFloat(this.CORRENTE_RMS));
                 axix.categories.push(this.DATAHORA);
+                aux++;
+            }
             });
 
 
@@ -382,9 +382,115 @@
 
         }
 
-        function excluirGrafico() {
-            alert(tipodografico);
-        }
+    
+    
+    
+    
+    
+    
+        $('#attAut').change(function () {
+            if ($("#attAut").is(":checked") == true) {
+                console.log("ATT AUTOMATICAMENTO");
+                 jQuery("[name = optradio]").attr('disabled',true);
+                 jQuery("[name = optradio2]").attr('disabled',true);
+                 jQuery("[name = che]").attr('disabled',true);
+                 myvar = setInterval(gerarplot, 5000);
+                 
+                 
+                  
+            }else{
+                  jQuery("[name = optradio]").attr('disabled',false);
+                 jQuery("[name = optradio2]").attr('disabled',false);
+                 jQuery("[name = che]").attr('disabled',false);               
+                clearInterval(myvar);
+            }
+        });
+       function gerarplot(){
+          
+          
+           var options = {
+                chart: {
+                    renderTo: 'grafico',
+                    type: 'line',
+                    marginBottom: 25
+                },
+                title: {
+                    text: 'Grafico de Corrente',
+                    x: -20 //center
+                },
+//                subtitle: {
+//                    text: 'data',
+//                    x: -20
+//                },
+                xAxis: {
+                    type: 'datetime',
+                    categories: []
+                },
+                yAxis: {
+                    title: {
+                        text: 'A'
+                    },
+                    plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                },
+                legend: {
+                    enabled: false
+                },
+                series: []
+            }
+
+
+
+            //var da series
+            var series = {
+                data: [],
+                color: 'red'
+            }
+            var axix = {
+                categories: [],
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    month: '%b \'%y'
+                }
+
+            }
+
+             $.get('/tccgiovani/index.php/monitoramentoPeriodico/attAutomatica', function (data) {
+                     $.each(data.grafico, function (key, value) {
+                     var potencia = (value.TENSAO_RMS * value.CORRENTE_RMS);
+                    var tensaorms = value.TENSAO_RMS;
+                    var correnterms = value.CORRENTE_RMS;
+                    
+
+                    table.row.add([
+                        value.DATAHORA,
+                        parseFloat(tensaorms).toFixed(2) + 'V',
+                        parseFloat(correnterms).toFixed(2) + 'A'
+
+
+                    ]).draw(false);
+                });
+//          
+//            $.each(data2.dado, function () {
+//
+//                series.data.push(parseFloat(this.CORRENTE_RMS));
+//                axix.categories.push(this.DATAHORA);
+//            });
+//
+//
+//            //plot do grafico de tensao
+//            options.xAxis.categories = axix['categories'];
+//            options.series[0] = series;
+//            chart = new Highcharts.Chart(options);
+//          
+//           chart.series[0].addPoint();
+                   
+        }, 'JSON');
+       }
+
 
 
     });

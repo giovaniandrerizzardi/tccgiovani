@@ -20,11 +20,15 @@
 
                         <tr><td><?php echo $this->lang->line('date'); ?></td>
                             <td id="data">oi</td></tr>
+                         <tr><td><?php echo $this->lang->line('tipo'); ?></td>
+                            <td id="tipoevt">oi</td></tr>
                         <tr><td><?php echo $this->lang->line('tensao'); ?></td>
                             <td id="tensaorms">oi</td></tr>
                         <tr><td><?php echo $this->lang->line('corrente'); ?></td>
                             <td id="correnterms">oi</td></tr>
                         <tr><td><?php echo $this->lang->line('fatorp'); ?></td>
+                            <td id="fatorp">oi</td></tr>
+                          <tr><td><?php echo $this->lang->line('potencia'); ?></td>
                             <td id="potencia">oi</td></tr>
 
                     </table>
@@ -104,15 +108,17 @@
             //a series e a linha  nova que vai ta no highcrarts, onde eu guardo os valores vindo do php   dentro do series.data     
             if (data.rgrafico.grafico[0].DATAHORA !== datatest) {
                
-
+         
             //preenchiment da tabela data.rgrafico.grafico[0].TENSAO_RMS;
 
             document.getElementById('data').innerHTML = data.rgrafico.grafico[0].DATAHORA;
+             document.getElementById('tipoevt').innerHTML = data.rgrafico.grafico[0].DESCRICAO;
             document.getElementById('tensaorms').innerHTML = data.rgrafico.grafico[0].TENSAO_RMS;
             document.getElementById('correnterms').innerHTML = data.rgrafico.grafico[0].CORRENTE_RMS;
+            // document.getElementById('fatorp').innerHTML = "soon";
             var potencia = data.rgrafico.grafico[0].TENSAO_RMS * data.rgrafico.grafico[0].CORRENTE_RMS;
             document.getElementById('potencia').innerHTML = potencia;
-
+            
 
 
             var series = {
