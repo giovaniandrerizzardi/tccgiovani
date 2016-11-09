@@ -18,7 +18,7 @@
         
          <!-- Arquivos tables -->
         <script src="<?php echo base_url() ?>includes/js/datatables.min.js"></script>
-        <link rel='stylesheet' href='https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css'>
+        <link rel='stylesheet' href="<?php echo base_url() ?>includes/css/datatables.min.css">
         
         
         <!-- Arquivos CSS -->
@@ -26,11 +26,11 @@
         <link rel="stylesheet" href="<?php echo base_url() ?>includes/css/estilosMauricio.css">
 
         <!-- data time picker -->
-        <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>includes/js/moment-with-locales.min.js"></script>
         <script src="<?php echo base_url() ?>includes/js/bootstrap-material-datetimepicker.js"></script>        
         <link rel="stylesheet" href="<?php echo base_url() ?>includes/css/bootstrap-material-datetimepicker.css">
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="<?php echo base_url() ?>includes/css/cssfamily.css" rel='stylesheet' type='text/css'>
+        <link href="<?php echo base_url() ?>includes/css/icon.css" rel="stylesheet">
 
                 
        

@@ -138,7 +138,7 @@ $phi = atan($FOURRIER_T[1]->getImag()/ $FOURRIER_T[1]->getReal())- atan($FOURRIE
 
 echo 'phi = '.$phi;
 
-exit;
+
 //copy results of fft to build a inverse only with 60 Hz [1]
 //for ($i = 0; $i < 64; $i++)
 //    if ($i == 1)
