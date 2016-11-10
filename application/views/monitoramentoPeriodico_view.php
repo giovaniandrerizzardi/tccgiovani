@@ -11,8 +11,8 @@
             <button id="click_me" type="button">Click Me!</button>
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
-            <div class="col-md-6 col-xs-6">
-
+            <div class="paginate col-md-6 col-xs-6">
+                
                 <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
                     <thead>
                         <tr>
@@ -231,10 +231,21 @@
                 alert("selecione a opção Agrupar Valores!");
             }
         });
+        
+        $('.paginate_button.previous').click(function (){
+            console.log('foi');
+        })
+        $('#tbodyloco').on( 'click', 'tr', function () {
+    console.log( table.row( this ).data()[1] );
+     
+} );
 
-
-
-
+$(document).on('click','.paginate_button.previous',function(){ 
+    $('#tbodyloco tr').each(function (){
+        console.log( table.row(this).data() );
+    });
+        
+    });
 
 
 
