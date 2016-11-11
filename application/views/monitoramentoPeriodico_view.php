@@ -11,7 +11,7 @@
             <button id="click_me" type="button">Click Me!</button>
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
-            <div class="paginate col-md-6 col-xs-6">
+            <div class="col-md-6 col-xs-6">
 
                 <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
                     <thead>
