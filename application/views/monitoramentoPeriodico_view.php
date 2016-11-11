@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
             <div class="paginate col-md-6 col-xs-6">
-                
+
                 <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
                     <thead>
                         <tr>
@@ -93,15 +93,14 @@
         <div class="col-md-12 col-xs-12" id="borda">
             <div class="col-md-5 col-xs-5">
                 <div id="grafico">
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
+                    
                 </div>
             </div>
-
+            <div class="col-md-5 col-xs-5">
+                <div id="faselinha">
+                    
+                </div>
+            </div>
 
         </div>
     </div>
@@ -124,7 +123,7 @@
             dtfim = $('#enddate').val();
 
             //get é um ajax  simplificado, mais simples. onde recebe os dados no data
-          $.get('http://localhost/tccgiovani/index.php/monitoramentoPeriodico/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
+            $.get('http://localhost/tccgiovani/index.php/monitoramentoPeriodico/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
                 dataImp = data;
                 $('#tbodyloco').closest('tr').remove();
                 //preenche a tabela com os dados
@@ -151,17 +150,17 @@
 
         });
 
- $('#valoresNoGrafico').change(function () {
-          valnografico =  $('#valoresNoGrafico').val();
-          console.log(valnografico);
+        $('#valoresNoGrafico').change(function () {
+            valnografico = $('#valoresNoGrafico').val();
+            console.log(valnografico);
         });
-        
-        
-        
+
+
+
         $('#grafico_Corrente').change(function () {
             if ($("#grafico_Corrente").is(":checked") == true && $("#agruparValores").is(":checked") == true) {
                 geraGraficoCorrente(dataagroup);
-            }else{
+            } else {
                 geraGraficoCorrente(dataImp);
             }
 
@@ -172,7 +171,7 @@
         $('#grafico_Tensao').change(function () {
             if ($("#grafico_Tensao").is(":checked") == true && $("#agruparValores").is(":checked") == true) {
                 geraGraficoTensao(dataagroup);
-            }else{
+            } else {
                 geraGraficoTensao(dataImp);
             }
 
@@ -210,13 +209,13 @@
                     fim: dtfim,
                     agrupador: agrupador,
                     tipodata: tipodata,
-                    periodo: periodo,
                     dados: dataImp
                 }
 
-                 console.log(aux);
-                $.get('/tccgiovani/index.php/monitoramentoPeriodico/calcula', aux, function (data) {
+                // console.log(aux);
+                $.post('/tccgiovani/index.php/monitoramentoPeriodico/calcula', aux, function (data) {
                     console.log("foi 2");
+                    console.log(data.dado);
                    dataagroup=data;
                     if ($("#grafico_Tensao").is(":checked") == true) {
                         geraGraficoTensao(data);
@@ -225,27 +224,32 @@
                         geraGraficoCorrente(data);
                     }
 
-                }, 'JSON');
+                },'JSON');
+          
+
+
+
+
 
             } else {
                 alert("selecione a opção Agrupar Valores!");
             }
         });
-        
-        $('.paginate_button.previous').click(function (){
+
+        $('.paginate_button.previous').click(function () {
             console.log('foi');
         })
-        $('#tbodyloco').on( 'click', 'tr', function () {
-    console.log( table.row( this ).data()[1] );
-     
-} );
+        $('#tbodyloco').on('click', 'tr', function () {
+            console.log(table.row(this).data()[1]);
 
-$(document).on('click','.paginate_button.previous',function(){ 
-    $('#tbodyloco tr').each(function (){
-        console.log( table.row(this).data() );
-    });
-        
-    });
+        });
+
+        $(document).on('click', '.paginate_button.previous', function () {
+            $('#tbodyloco tr').each(function () {
+                console.log(table.row(this).data());
+            });
+
+        });
 
 
 
@@ -306,11 +310,11 @@ $(document).on('click','.paginate_button.previous',function(){
             var aux = 0;
 
             $.each(data2.dado, function () {
-                if(aux !== valnografico){
-                series.data.push(parseFloat(this.TENSAO_RMS));
-                axix.categories.push(this.DATAHORA);
-                aux++;
-            }
+                if (this.DATAHORA !== '1999-01-01 11:24:26') {
+                    series.data.push(parseFloat(this.TENSAO_RMS));
+                    axix.categories.push(this.DATAHORA);
+                    
+                }
             });
 
 
@@ -378,11 +382,12 @@ $(document).on('click','.paginate_button.previous',function(){
             }
             var aux = 0;
             $.each(data2.dado, function () {
-                if(aux !== valnografico){
-                series.data.push(parseFloat(this.CORRENTE_RMS));
-                axix.categories.push(this.DATAHORA);
-                aux++;
-            }
+               if (this.DATAHORA !== '1999-01-01 11:24:26') {
+
+                    series.data.push(parseFloat(this.CORRENTE_RMS));
+                    axix.categories.push(this.DATAHORA);
+                    aux++;
+                }
             });
 
 
@@ -393,33 +398,33 @@ $(document).on('click','.paginate_button.previous',function(){
 
         }
 
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
         $('#attAut').change(function () {
             if ($("#attAut").is(":checked") == true) {
                 console.log("ATT AUTOMATICAMENTO");
-                 jQuery("[name = optradio]").attr('disabled',true);
-                 jQuery("[name = optradio2]").attr('disabled',true);
-                 jQuery("[name = che]").attr('disabled',true);
-                 myvar = setInterval(gerarplot, 5000);
-                 
-                 
-                  
-            }else{
-                  jQuery("[name = optradio]").attr('disabled',false);
-                 jQuery("[name = optradio2]").attr('disabled',false);
-                 jQuery("[name = che]").attr('disabled',false);               
+                jQuery("[name = optradio]").attr('disabled', true);
+                jQuery("[name = optradio2]").attr('disabled', true);
+                jQuery("[name = che]").attr('disabled', true);
+                myvar = setInterval(gerarplot, 5000);
+
+
+
+            } else {
+                jQuery("[name = optradio]").attr('disabled', false);
+                jQuery("[name = optradio2]").attr('disabled', false);
+                jQuery("[name = che]").attr('disabled', false);
                 clearInterval(myvar);
             }
         });
-       function gerarplot(){
-          
-          
-           var options = {
+        function gerarplot() {
+
+
+            var options = {
                 chart: {
                     renderTo: 'grafico',
                     type: 'line',
@@ -469,12 +474,12 @@ $(document).on('click','.paginate_button.previous',function(){
 
             }
 
-             $.get('/tccgiovani/index.php/monitoramentoPeriodico/attAutomatica', function (data) {
-                     $.each(data.grafico, function (key, value) {
-                     var potencia = (value.TENSAO_RMS * value.CORRENTE_RMS);
+            $.get('/tccgiovani/index.php/monitoramentoPeriodico/attAutomatica', function (data) {
+                $.each(data.grafico, function (key, value) {
+                    var potencia = (value.TENSAO_RMS * value.CORRENTE_RMS);
                     var tensaorms = value.TENSAO_RMS;
                     var correnterms = value.CORRENTE_RMS;
-                    
+
 
                     table.row.add([
                         value.DATAHORA,
@@ -498,10 +503,46 @@ $(document).on('click','.paginate_button.previous',function(){
 //            chart = new Highcharts.Chart(options);
 //          
 //           chart.series[0].addPoint();
-                   
-        }, 'JSON');
-       }
 
+            }, 'JSON');
+        }
+$(function () {
+    $('#faselinha').highcharts({
+        chart: {
+            type: 'spline',
+            // Edit chart spacing
+            spacingBottom: 0,
+
+        },
+        legend: {
+            enabled: false
+        },
+        title: {
+            text: ''
+        },
+        credits: {
+            enabled: false
+        },
+        xAxis: {
+            title:{
+                text: 'Tempo/100 (ms)'
+            },
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '8px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+        },
+         tickPositions: [0,104,201, 305, 403,501,605,703,800,904,1002,1100,1204,1302,1406,1503,1601]
+        },
+        yAxis: {
+            title: {
+                text: 'Corrente (mA)'
+            },
+        }
+    });
+});
 
 
     });
