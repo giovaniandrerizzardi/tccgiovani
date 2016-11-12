@@ -17,8 +17,8 @@
                     <thead>
                         <tr>
                             <th style="width: 140px;"><?php echo $this->lang->line('Data'); ?></th>
+                            <th><?php echo $this->lang->line('consumo'); ?></th>
                             <th><?php echo $this->lang->line('tensao'); ?></th>
-                            <th><?php echo $this->lang->line('corrente'); ?></th>
 
                         </tr>
                     </thead>
@@ -31,7 +31,7 @@
             <div class="col-md-6 col-xs-6" id="tabelaDireita">
                 <div class="col-md-12 col-xs-12" id="borda">
 
-                    <label class="radio-inline"><input id="grafico_Corrente" type="radio" name="optradiort"><?php echo $this->lang->line('graficoCorrente'); ?></label>
+                    <label class="radio-inline"><input id="grafico_Corrente" type="radio" name="optradiort" checked><?php echo $this->lang->line('graficoCorrente'); ?></label>
                     <label class="radio-inline"><input id="grafico_Tensao" type="radio" name="optradiort"><?php echo $this->lang->line('graficoTensao'); ?></label>
 
                 </div>
@@ -91,16 +91,12 @@
             </div>
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
-            <div class="col-md-5 col-xs-5">
+            <div class="col-md-10 col-xs-10 col-md-offset-1">
                 <div id="grafico">
-                    
+
                 </div>
             </div>
-            <div class="col-md-5 col-xs-5">
-                <div id="faselinha">
-                    
-                </div>
-            </div>
+           
 
         </div>
     </div>
@@ -138,8 +134,9 @@
 
                     table.row.add([
                         value.DATAHORA,
-                        parseFloat(tensaorms).toFixed(2) + 'kWh',
-                        parseFloat(correnterms).toFixed(2) + 'A'
+                        parseFloat(correnterms).toFixed(2) + ' kWh',
+                        parseFloat(tensaorms).toFixed(2) + ' V'
+
 
 
                     ]).draw(false);
@@ -159,9 +156,10 @@
 
         $('#grafico_Corrente').change(function () {
             if ($("#grafico_Corrente").is(":checked") == true && $("#agruparValores").is(":checked") == true) {
+                //gera o grafico do agrupar valores  
                 geraGraficoCorrente(dataagroup);
             } else {
-                geraGraficoCorrente(dataImp);
+                //geraGraficoCorrente(dataImp);
             }
 
 
@@ -172,7 +170,7 @@
             if ($("#grafico_Tensao").is(":checked") == true && $("#agruparValores").is(":checked") == true) {
                 geraGraficoTensao(dataagroup);
             } else {
-                geraGraficoTensao(dataImp);
+                // geraGraficoTensao(dataImp);
             }
 
 
@@ -216,7 +214,7 @@
                 $.post('/tccgiovani/index.php/monitoramentoPeriodico/calcula', aux, function (data) {
                     console.log("foi 2");
                     console.log(data.dado);
-                   dataagroup=data;
+                    dataagroup = data;
                     if ($("#grafico_Tensao").is(":checked") == true) {
                         geraGraficoTensao(data);
                     }
@@ -224,8 +222,8 @@
                         geraGraficoCorrente(data);
                     }
 
-                },'JSON');
-          
+                }, 'JSON');
+
 
 
 
@@ -243,11 +241,138 @@
             console.log(table.row(this).data()[1]);
 
         });
+        var dados;
 
-        $(document).on('click', '.paginate_button.previous', function () {
-            $('#tbodyloco tr').each(function () {
-                console.log(table.row(this).data());
-            });
+        $(document).on('click', '.paginate_button', function () {
+
+            if ($("#grafico_Tensao").is(":checked") == true) {
+                //grafico
+                var options = {
+                    chart: {
+                        renderTo: 'grafico',
+                        type: 'line',
+                        marginBottom: 25
+                    },
+                    title: {
+                        text: 'Grafico de Tensao',
+                        x: -20 //center
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        categories: []
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Volts'
+                        },
+                        plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    series: []
+                }
+
+
+
+                //var da series
+                var series = {
+                    data: [],
+                    color: 'blue'
+                }
+                var axix = {
+                    categories: [],
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                        month: '%b \'%y'
+                    }
+
+                }
+                var aux = 0;
+
+                //0 e data, 1 e consumo  e 2 e tensao
+                $('#tbodyloco tr').each(function () {
+                    dados = table.row(this).data();
+                    var t = dados[2].split(" ");
+                    //console.log(t[0]);
+                    series.data.push(parseFloat(t[0]));
+                    axix.categories.push(dados[0]);
+                });
+                options.xAxis.categories = axix['categories'];
+                options.series[0] = series;
+                chart = new Highcharts.Chart(options);
+                
+            } else {
+                var options = {
+                    chart: {
+                        renderTo: 'grafico',
+                        type: 'line',
+                        marginBottom: 25
+                    },
+                    title: {
+                        text: 'Grafico de Corrente',
+                        x: -20 //center
+                    },
+//                subtitle: {
+//                    text: 'data',
+//                    x: -20
+//                },
+                    xAxis: {
+                        type: 'datetime',
+                        categories: []
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'A'
+                        },
+                        plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    series: []
+                }
+
+
+
+                //var da series
+                var series = {
+                    data: [],
+                    color: 'red'
+                }
+                var axix = {
+                    categories: [],
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                        month: '%b \'%y'
+                    }
+
+                }
+
+
+                $('#tbodyloco tr').each(function () {
+                    dados = table.row(this).data();
+                    var t = dados[1].split(" ");
+                    //console.log(t[0]);
+                    series.data.push(parseFloat(t[0]));
+                    axix.categories.push(dados[0]);
+                });
+                options.xAxis.categories = axix['categories'];
+                options.series[0] = series;
+                chart = new Highcharts.Chart(options);
+
+
+            }
+
+
 
         });
 
@@ -261,7 +386,7 @@
 
         function geraGraficoTensao(data2) {
 
-            //grafico
+
             var options = {
                 chart: {
                     renderTo: 'grafico',
@@ -313,7 +438,7 @@
                 if (this.DATAHORA !== '1999-01-01 11:24:26') {
                     series.data.push(parseFloat(this.TENSAO_RMS));
                     axix.categories.push(this.DATAHORA);
-                    
+
                 }
             });
 
@@ -382,7 +507,7 @@
             }
             var aux = 0;
             $.each(data2.dado, function () {
-               if (this.DATAHORA !== '1999-01-01 11:24:26') {
+                if (this.DATAHORA !== '1999-01-01 11:24:26') {
 
                     series.data.push(parseFloat(this.CORRENTE_RMS));
                     axix.categories.push(this.DATAHORA);
@@ -421,6 +546,7 @@
                 clearInterval(myvar);
             }
         });
+         var last ='0';
         function gerarplot() {
 
 
@@ -473,76 +599,44 @@
                 }
 
             }
+           
+            
 
             $.get('/tccgiovani/index.php/monitoramentoPeriodico/attAutomatica', function (data) {
-                $.each(data.grafico, function (key, value) {
-                    var potencia = (value.TENSAO_RMS * value.CORRENTE_RMS);
-                    var tensaorms = value.TENSAO_RMS;
-                    var correnterms = value.CORRENTE_RMS;
-
-
-                    table.row.add([
-                        value.DATAHORA,
-                        parseFloat(tensaorms).toFixed(2) + 'V',
-                        parseFloat(correnterms).toFixed(2) + 'A'
-
-
-                    ]).draw(false);
+                var aux = 0;
+             
+              if(last !== data.dado[0].DATAHORA){
+                  console.log('diferente');
+                    last = data.dado[0].DATAHORA;
+                $.each(data.dado, function (key, value) {
+                    if (aux === 0) {
+                        
+                        var potencia = (value.TENSAO_RMS * value.CORRENTE_RMS);
+                        var tensaorms = value.TENSAO_RMS;
+                        var correnterms = value.CORRENTE_RMS;
+                        //console.log(value.DATAHORA);
+                        table.row.add([
+                            value.DATAHORA,
+                            parseFloat(correnterms).toFixed(2) + ' kWh',
+                            parseFloat(tensaorms).toFixed(2) + ' V'
+                        ]).draw(false);
+                        aux=1;
+                       
+                    }
                 });
-//          
-//            $.each(data2.dado, function () {
-//
-//                series.data.push(parseFloat(this.CORRENTE_RMS));
-//                axix.categories.push(this.DATAHORA);
-//            });
-//
-//
-//            //plot do grafico de tensao
-//            options.xAxis.categories = axix['categories'];
-//            options.series[0] = series;
-//            chart = new Highcharts.Chart(options);
-//          
-//           chart.series[0].addPoint();
 
+                if ($("#grafico_Tensao").is(":checked") == true) {
+                    geraGraficoTensao(data);
+                }
+                if ($("#grafico_Corrente").is(":checked") == true) {
+                    geraGraficoCorrente(data);
+                }
+            }else{
+                console.log('igual');
+            }
             }, 'JSON');
         }
-$(function () {
-    $('#faselinha').highcharts({
-        chart: {
-            type: 'spline',
-            // Edit chart spacing
-            spacingBottom: 0,
 
-        },
-        legend: {
-            enabled: false
-        },
-        title: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        xAxis: {
-            title:{
-                text: 'Tempo/100 (ms)'
-            },
-            labels: {
-                rotation: -45,
-                style: {
-                    fontSize: '8px',
-                    fontFamily: 'Verdana, sans-serif'
-                }
-        },
-         tickPositions: [0,104,201, 305, 403,501,605,703,800,904,1002,1100,1204,1302,1406,1503,1601]
-        },
-        yAxis: {
-            title: {
-                text: 'Corrente (mA)'
-            },
-        }
-    });
-});
 
 
     });

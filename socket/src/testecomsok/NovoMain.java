@@ -40,8 +40,8 @@ public class NovoMain {
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", "USER_AGENT");
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-            String tipevnt = "2";
-            String tensao = geravalores(64, 20, 430);
+            String tipevnt = "1";
+            String tensao = geravalores(64, 1, 430);
             String codsensor = "1";
             String corrente = geravalores(64, 4, 530);
 

@@ -139,61 +139,6 @@ $phi = atan($FOURRIER_T[1]->getImag()/ $FOURRIER_T[1]->getReal())- atan($FOURRIE
 echo 'phi = '.$phi;
 
 
-//copy results of fft to build a inverse only with 60 Hz [1]
-//for ($i = 0; $i < 64; $i++)
-//    if ($i == 1)
-//       $auxc[$i] = new Complex($FOURRIER_C[$i]->getReal(), $FOURRIER_C[$i]->getImag());
-//    else
-//       $auxc[$i] = new Complex(0, 0); 
-//
-//
-//    
-//$auxfic=$ifft->ifft($auxc);
-//$auxfit=$ifft->ifft($auxt);
-//
-//
-//
-//$flagc = 0;
-//$flagt = 0;
-//
-//if($auxfic[0]->getReal()>0)$flagc = 1;
-//if($auxfic[0]->getReal()>0)$flagt = 1;
-//
-//
-//
-//for($i=0;$i<64;$i++){
-//    if($flagc = 0){
-//  $auxc[$i] = $auxfic[$i]->getReal();
-//  if($auxc[$i] > 0){
-//      $flagc=$i;
-//  }
-//    }elseif ($flagc =1) {
-//        $auxc[$i] = $auxfic[$i]->getReal();
-//         if($auxc[$i] < 0){
-//         $flagc=$i;
-//  }
-//    }
-//    if($flagt=0){
-//  $auxt = $auxfit[$i]->getReal();
-//  if($auxt[$i]>0){
-//      $flagt=$i;
-//  }
-//}elseif ($flagt =1) {
-//        $auxt[$i] = $auxfit[$i]->getReal();
-//         if($auxt[$i] < 0){
-//         $flagt=$i;
-//  }
-//    }
-//
-//}
-//$dif = $flagc - $flagt;
-//$dif2 = $auxfic[$flagc]->getReal() - $auxfit[$flagt]->getReal();
-//echo 'consumo: '.$flagc;
-//echo 'tensao: '.$flagt;
-//echo 'dif: '.$dif. '      ';
-//echo 'dif de valor: '.$dif2. '      ';
-//
-//
 
 
 
@@ -203,11 +148,10 @@ for ($i = 0; $i < count($VAL_T_VET); $i++) {
     $powerc[$i] = $powerc[$i] / $aux;
 //$powert[$i] = sqrt ($FOURRIER_T [$i]->getReal() * $FOURRIER_T [$i]->getReal() +$FOURRIER_T [$i]->getImag() * $FOURRIER_T [$i]->getImag()) / (count($VAL_T_VET) / 2);
 //$powerc[$i] = sqrt ($FOURRIER_C [$i]->getReal() * $FOURRIER_C [$i]->getReal() +$FOURRIER_C [$i]->getImag() * $FOURRIER_C [$i]->getImag()) / (count($VAL_T_VET) / 2);
-//O TESTEEE � O VALOR DO MODULO!!!!!!!!!!  O POWER TBM � O VALOR DO MODULO, NAO SEI O QUE �R ISSO(HARMONICA)
 }
 
 //$FI = calculaFi($FOURRIER_T, $FOURRIER_C, $CORRENTE_RMS);
-$FI = 20;
+
 
 
 //        pegar  a data  atual aqui,  e depois no final tentar inserir   na tabela consumo...
@@ -259,7 +203,7 @@ mysql_close();
         $erro = 0;
 
 
-        $captureSQL = sprintf("INSERT INTO COLETA (DATAHORA,TENSAO_RMS,CORRENTE_RMS,FI,VAL_TENSAO,VAL_CORRENTE,SENSOR_SENSOR_COD,TIPO_EVENTO_CODIGO_EVT) VALUES (NOW(),%s,%s,%s,'%s','%s',%s,%s)", GetSQLValueString($TENSAO_RMS, 'double'), GetSQLValueString($CORRENTE_RMS, 'double'), GetSQLValueString($FI, 'double'), GetSQLValueString($TENSAOSTRING, 'string'), GetSQLValueString($CORRENTESTRING, 'string'), GetSQLValueString($SENSOR_COD, 'int'), GetSQLValueString($CODIGO_EVT, 'int'));
+        $captureSQL = sprintf("INSERT INTO COLETA (DATAHORA,TENSAO_RMS,CORRENTE_RMS,FI,VAL_TENSAO,VAL_CORRENTE,SENSOR_SENSOR_COD,TIPO_EVENTO_CODIGO_EVT) VALUES (NOW(),%s,%s,%s,'%s','%s',%s,%s)", GetSQLValueString($TENSAO_RMS, 'double'), GetSQLValueString($CORRENTE_RMS, 'double'), GetSQLValueString($phi, 'double'), GetSQLValueString($TENSAOSTRING, 'string'), GetSQLValueString($CORRENTESTRING, 'string'), GetSQLValueString($SENSOR_COD, 'int'), GetSQLValueString($CODIGO_EVT, 'int'));
 
         if (!mysqli_query($connect, $captureSQL))
             $erro = 1;

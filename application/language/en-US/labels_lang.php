@@ -24,7 +24,7 @@ $lang["consumomes"] = "Consumo Mes/Ano";
 $lang["graficoCorrente"] = " grafico Corrente";
 $lang["graficoTensao"] = " grafico Tensao";
 $lang["attAut"] = "Atualizar Automaticamente";
-
+$lang["consumo"] = "Consumo";
 //evetosdetalhados
 $lang["Data"] = "Data";
 $lang["tipoevento"] = "Tipo";
