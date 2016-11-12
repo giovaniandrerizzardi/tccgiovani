@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
             <div class="col-md-6 col-xs-6">
-
+                  <h2>Tabela</h2>
                 <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
                     <thead>
                         <tr>
@@ -67,15 +67,24 @@
             </div>
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
-            <div class="col-md-5 col-xs-5">
+            <div class="col-md-6 col-xs-6">
                 <div id="grafico">
 
                 </div>
             </div>
-            <div class="col-md-5 col-xs-5">
+         
+            <div class="col-md-3 col-xs-3" id="borda2">
+                <label class="radio-inline"><input id="grafico_Corrente" type="radio" name="optradiort" checked><?php echo $this->lang->line('graficoCorrente'); ?></label>
+                <label class="radio-inline"><input id="grafico_Tensao" type="radio" name="optradiort"><?php echo $this->lang->line('graficoTensao'); ?></label>
+                &nbsp;
+                 &nbsp;
+                
                 <section class="container">
+                    
+                  
+               
                     <div>
-                        <select id="leftValues" size="10" multiple></select>
+                        <select id="leftValues" size="2" multiple></select>
                     </div>
                     <div>
                         <input type="button" id="btnLeft" value="&lt;&lt;" />
@@ -153,41 +162,42 @@
                     var correnterms = value.CORRENTE_RMS;
                     var fi = value.FI;
 
-                    var data = new Date(value.DATAHORA);
-                    var dia = data.getDate();
-                    if (dia.toString().length == 1)
-                        dia = "0" + dia;
-                    var mes = data.getMonth() + 1;
-                    if (mes.toString().length == 1)
-                        mes = "0" + mes;
-                    var ano = data.getFullYear();
-                    var data_final = dia + "/" + mes + "/" + ano;
-
-                    var hora = 0;
-                    var minuto = 0;
-                    var segundo = 0;
-
-                    hora = data.getHours();
-                    if (data.getHours() < 10)
-                        hora = '0' + data.getHours();
-
-
-                    minuto = data.getMinutes();
-                    if (data.getMinutes() < 10)
-                        minuto = '0' + data.getMinutes();
-
-                    segundo = data.getSeconds();
-                    if (data.getSeconds() < 10)
-                        segundo = '0' + data.getSeconds();
-
-
-
-                    data_final += ' - ' + hora + ':' + minuto + ':' + segundo;
+//                    var data = new Date(value.DATAHORA);
+//                    var dia = data.getDate();
+//                    if (dia.toString().length == 1)
+//                        dia = "0" + dia;
+//                    var mes = data.getMonth() + 1;
+//                    if (mes.toString().length == 1)
+//                        mes = "0" + mes;
+//                    var ano = data.getFullYear();
+//                    var data_final = dia + "/" + mes + "/" + ano;
+//
+//                    var hora = 0;
+//                    var minuto = 0;
+//                    var segundo = 0;
+//
+//                    hora = data.getHours();
+//                    if (data.getHours() < 10)
+//                        hora = '0' + data.getHours();
+//
+//
+//                    minuto = data.getMinutes();
+//                    if (data.getMinutes() < 10)
+//                        minuto = '0' + data.getMinutes();
+//
+//                    segundo = data.getSeconds();
+//                    if (data.getSeconds() < 10)
+//                        segundo = '0' + data.getSeconds();
+//
+//
+//
+//                    data_final += ' - ' + hora + ':' + minuto + ':' + segundo;
                     //variavel global do arquivo inicializações.js
                     table.row.add([
-                        data_final,
+                        //data_final,
+                        value.DATAHORA,
                         value.DESCRICAO,
-                        parseFloat(tensaorms).toFixed(2) + 'kWh',
+                        parseFloat(tensaorms).toFixed(2) + ' V',
                         parseFloat(correnterms).toFixed(2) + 'A',
                         parseFloat(fi).toFixed(2),
                         potencia.toFixed(2)
@@ -399,6 +409,138 @@
         }
 
 
+        $(document).on('click', '.paginate_button', function () {
+
+            if ($("#grafico_Tensao").is(":checked") == true) {
+                //grafico
+                var options = {
+                    chart: {
+                        renderTo: 'grafico',
+                        type: 'line',
+                        marginBottom: 25
+                    },
+                    title: {
+                        text: 'Grafico de Tensao',
+                        x: -20 //center
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        categories: []
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Volts'
+                        },
+                        plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    series: []
+                }
+
+
+
+                //var da series
+                var series = {
+                    data: [],
+                    color: 'blue'
+                }
+                var axix = {
+                    categories: [],
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                        month: '%b \'%y'
+                    }
+
+                }
+                var aux = 0;
+
+                //0 e data, 1 e consumo  e 2 e tensao
+                $('#tbodyloco tr').each(function () {
+                    dados = table.row(this).data();
+                    var t = dados[2].split(" ");
+                    //console.log(t[0]);
+                    series.data.push(parseFloat(t[0]));
+                    axix.categories.push(dados[0]);
+                });
+                options.xAxis.categories = axix['categories'];
+                options.series[0] = series;
+                chart = new Highcharts.Chart(options);
+                
+            } else {
+                var options = {
+                    chart: {
+                        renderTo: 'grafico',
+                        type: 'line',
+                        marginBottom: 25
+                    },
+                    title: {
+                        text: 'Grafico de Corrente',
+                        x: -20 //center
+                    },
+//                subtitle: {
+//                    text: 'data',
+//                    x: -20
+//                },
+                    xAxis: {
+                        type: 'datetime',
+                        categories: []
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'A'
+                        },
+                        plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    series: []
+                }
+
+
+
+                //var da series
+                var series = {
+                    data: [],
+                    color: 'red'
+                }
+                var axix = {
+                    categories: [],
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                        month: '%b \'%y'
+                    }
+
+                }
+
+
+                $('#tbodyloco tr').each(function () {
+                    dados = table.row(this).data();
+                    var t = dados[3].split(" ");
+                    //console.log(t[0]);
+                    series.data.push(parseFloat(t[0]));
+                    axix.categories.push(dados[0]);
+                });
+                options.xAxis.categories = axix['categories'];
+                options.series[0] = series;
+                chart = new Highcharts.Chart(options);
+
+
+            }
+
+
+
+        });
     });
 
 </script>

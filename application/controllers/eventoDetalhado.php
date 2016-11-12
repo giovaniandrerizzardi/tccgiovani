@@ -36,9 +36,9 @@ class eventoDetalhado extends MY_Controller {
         $retorno['dados']['totalcorrente'] = 0;
         $retorno['dados']['totaltensao'] = 0;
         $retorno['dados']['maiorcorrente'] = 0;
-        $retorno['dados']['menorcorrente'] = 0;
+        $retorno['dados']['menorcorrente'] = 999999;
         $retorno['dados']['maiortensao'] = 0;
-        $retorno['dados']['menortensao'] = 0;
+        $retorno['dados']['menortensao'] = 999999;
         foreach ($retorno['dado'] as $value) {
             $retorno['dados']['totalcorrente']+=$value->CORRENTE_RMS;
             $retorno['dados']['totaltensao']+=$value->TENSAO_RMS;

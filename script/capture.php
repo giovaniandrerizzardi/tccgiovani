@@ -111,7 +111,7 @@ $CORRENTE_RMS = sqrt($CORRENTE_RMS) / sqrt(count($CORRENTE_GRAND));
 $TENSAO_RMS = round($TENSAO_RMS, 2);
 $CORRENTE_RMS = round($CORRENTE_RMS, 2);
 
-echo 'tensao : '.$TENSAO_RMS;
+echo 'tensao : ' . $TENSAO_RMS;
 
 //********** fun�ao qe calcula FFT
 require_once 'FFT.class.php';
@@ -134,9 +134,9 @@ $fourier_array = Fourier($TENSAO_GRAND, 1);
 
 
 
-$phi = atan($FOURRIER_T[1]->getImag()/ $FOURRIER_T[1]->getReal())- atan($FOURRIER_C[1]->getImag()/ $FOURRIER_C[1]->getReal());
+$phi = atan($FOURRIER_T[1]->getImag() / $FOURRIER_T[1]->getReal()) - atan($FOURRIER_C[1]->getImag() / $FOURRIER_C[1]->getReal());
 
-echo 'phi = '.$phi;
+echo 'phi = ' . $phi;
 
 
 
@@ -150,42 +150,48 @@ for ($i = 0; $i < count($VAL_T_VET); $i++) {
 //$powerc[$i] = sqrt ($FOURRIER_C [$i]->getReal() * $FOURRIER_C [$i]->getReal() +$FOURRIER_C [$i]->getImag() * $FOURRIER_C [$i]->getImag()) / (count($VAL_T_VET) / 2);
 }
 
-//$FI = calculaFi($FOURRIER_T, $FOURRIER_C, $CORRENTE_RMS);
 
 
 
-//        pegar  a data  atual aqui,  e depois no final tentar inserir   na tabela consumo...
-        
+$mudadia = false;
+$mudames = false;
+
 date_default_timezone_set('America/Sao_Paulo');
-        $date = date('Y-m-d');
-        $datemonth = date('Y-m-01');
-        $datetime = date('Y-m-d H:i');
-        $mescru = $datemonth;
-       
+$date = date('Y-m-d');
+$datemonth = date('Y-m-01');
+$datetime = date('Y-m-d H:i');
+$mescru = $datemonth;
+
 $query_cmes = "SELECT MES FROM CONSUMOMES WHERE MES = '$mescru'";
 $mes = mysql_query($query_cmes, $conn) or die(mysql_error());
-if(mysql_num_rows($mes) == 0 ){
-      $insertMonthSQL = sprintf("INSERT INTO CONSUMOMES (MES, KW, DETLA_T) VALUES (%s,0,0)", GetSQLValueString($mescru, 'date'));
-       mysql_query($insertMonthSQL, $conn) or die(mysql_error());
-      echo 'mes inserido!  ';
+if (mysql_num_rows($mes) == 0) {
+    $mudames = true;
+    $insertMonthSQL = sprintf("INSERT INTO CONSUMOMES (MES, KW, DETLA_T) VALUES (%s,0,0)", GetSQLValueString($mescru, 'date'));
+    mysql_query($insertMonthSQL, $conn) or die(mysql_error());
+    echo 'mes inserido!  ';
 }
 $row_mes = mysql_fetch_assoc($mes);
 $mes = $row_mes['MES'];
 
+
 $diacru = $date;
+
+
 $query_cdia = "SELECT DIA FROM CONSUMODIA WHERE DIA = '$diacru'";
 $dia = mysql_query($query_cdia, $conn) or die(mysql_error());
-if(mysql_num_rows($dia) == 0 ){
-      $insertDaySQL = sprintf("INSERT INTO CONSUMODIA (DIA, KW, DELTA_T, CONSUMOMES_MES) VALUES (%s,0,0,%s)", GetSQLValueString($diacru, 'date'), GetSQLValueString($mescru, 'date'));
-       mysql_query($insertDaySQL, $conn) or die(mysql_error());
-         echo 'dia inserido!  ';
+if (mysql_num_rows($dia) == 0) {
+    $mudadia = true;
+    $insertDaySQL = sprintf("INSERT INTO CONSUMODIA (DIA, KW, DELTA_T, CONSUMOMES_MES) VALUES (%s,0,0,%s)", GetSQLValueString($diacru, 'date'), GetSQLValueString($mescru, 'date'));
+    mysql_query($insertDaySQL, $conn) or die(mysql_error());
+
+    echo 'dia inserido!  ';
 }
 $row_dia = mysql_fetch_assoc($dia);
 $dia = $row_dia['DIA'];
 
 
-echo '  dia : '.$dia;
-echo '  mes : '.$mes;
+echo '  dia : ' . $dia;
+echo '  mes : ' . $mes;
 
 
 
@@ -196,107 +202,137 @@ mysql_close();
 
 
 
-    if ($error == '') {
-        $connect = mysqli_connect("localhost", "root", "senha.123", "tcc_interface");
-        mysqli_autocommit($connect, FALSE);
+if ($error == '') {
+    $connect = mysqli_connect("localhost", "root", "senha.123", "tcc_interface");
+    mysqli_autocommit($connect, FALSE);
 
-        $erro = 0;
+    $erro = 0;
 
 
-        $captureSQL = sprintf("INSERT INTO COLETA (DATAHORA,TENSAO_RMS,CORRENTE_RMS,FI,VAL_TENSAO,VAL_CORRENTE,SENSOR_SENSOR_COD,TIPO_EVENTO_CODIGO_EVT) VALUES (NOW(),%s,%s,%s,'%s','%s',%s,%s)", GetSQLValueString($TENSAO_RMS, 'double'), GetSQLValueString($CORRENTE_RMS, 'double'), GetSQLValueString($phi, 'double'), GetSQLValueString($TENSAOSTRING, 'string'), GetSQLValueString($CORRENTESTRING, 'string'), GetSQLValueString($SENSOR_COD, 'int'), GetSQLValueString($CODIGO_EVT, 'int'));
+    $captureSQL = sprintf("INSERT INTO COLETA (DATAHORA,TENSAO_RMS,CORRENTE_RMS,FI,VAL_TENSAO,VAL_CORRENTE,SENSOR_SENSOR_COD,TIPO_EVENTO_CODIGO_EVT) VALUES (NOW(),%s,%s,%s,'%s','%s',%s,%s)", GetSQLValueString($TENSAO_RMS, 'double'), GetSQLValueString($CORRENTE_RMS, 'double'), GetSQLValueString($phi, 'double'), GetSQLValueString($TENSAOSTRING, 'string'), GetSQLValueString($CORRENTESTRING, 'string'), GetSQLValueString($SENSOR_COD, 'int'), GetSQLValueString($CODIGO_EVT, 'int'));
 
-        if (!mysqli_query($connect, $captureSQL))
-            $erro = 1;
-        $connect->insert_id;
-        $lastid = mysqli_insert_id($connect);
-        //pega a data do ultima coleta e a data da coleta atual que ja foi inserida no banco e  calcula o deltaT e o KW aqui.
-        echo 'teste do if' . $SENSOR_COD;
+    if (!mysqli_query($connect, $captureSQL))
+        $erro = 1;
+    $connect->insert_id;
+    $lastid = mysqli_insert_id($connect);
+    //pega a data do ultima coleta e a data da coleta atual que ja foi inserida no banco e  calcula o deltaT e o KW aqui.
+    echo 'teste do if' . $SENSOR_COD;
 
-        if ($CODIGO_EVT == 2) {
-            echo '   entrei no if';
-            $CODIGO_EVT = 1;
-            $lastdateSQL = sprintf("SELECT * FROM COLETA WHERE TIPO_EVENTO_CODIGO_EVT = %s ORDER BY COLETA_COD DESC LIMIT 1", GetSQLValueString($CODIGO_EVT, 'int'));
-            $atualdateSQL = sprintf("SELECT DATAHORA FROM COLETA WHERE COLETA_COD = %s", GetSQLValueString($lastid, 'int'));
-            $lastdate = mysqli_query($connect, $lastdateSQL);
-            $atualdate = mysqli_query($connect, $atualdateSQL);
-            $lastdate = $lastdate->fetch_assoc();
-            $atualdate = $atualdate->fetch_assoc();
-            // $lasteventSQL=  sprintf("SELECT * FROM CONSUMO WHERE COLETA_COD = %s", GetSQLValueString($lastdateid, 'int'));
-            echo 'data antiga: ' . $lastdate['DATAHORA'];
-              $trms = $lastdate['TENSAO_RMS'];
-            $crms = $lastdate['CORRENTE_RMS'];
-            echo 'tensao'.$trms;
-            echo 'corrente'.$crms;
+    if ($CODIGO_EVT == 2) {
+        echo '   entrei no if';
+        $CODIGO_EVT = 1;
+        $lastdateSQL = sprintf("SELECT * FROM COLETA WHERE TIPO_EVENTO_CODIGO_EVT = %s ORDER BY COLETA_COD DESC LIMIT 1", GetSQLValueString($CODIGO_EVT, 'int'));
+        $atualdateSQL = sprintf("SELECT DATAHORA FROM COLETA WHERE COLETA_COD = %s", GetSQLValueString($lastid, 'int'));
+        $lastdate = mysqli_query($connect, $lastdateSQL);
+        $atualdate = mysqli_query($connect, $atualdateSQL);
+        $lastdate = $lastdate->fetch_assoc();
+        $atualdate = $atualdate->fetch_assoc();
+        // $lasteventSQL=  sprintf("SELECT * FROM CONSUMO WHERE COLETA_COD = %s", GetSQLValueString($lastdateid, 'int'));
+        echo 'data antiga: ' . $lastdate['DATAHORA'];
+        $trms = $lastdate['TENSAO_RMS'];
+        $crms = $lastdate['CORRENTE_RMS'];
+        echo '    tensao' . $trms;
+        echo '    corrente' . $crms;
 
-            $diferenca = dateDifference($lastdate['DATAHORA'], $atualdate['DATAHORA']);
-           //transforma em hora.
-            $diferenca = $diferenca /3600;
-            echo 'diferenca: ';
-            echo $diferenca;
-            
-          
-            $kwconsumo = ($trms * $crms) * $diferenca;
 
-            echo 'kw: '.$kwconsumo;
-           
 
-            echo 'dia: '.$dia;
 
-            $insertconsumoSQL = sprintf("INSERT INTO CONSUMO (INICIO_EVENT,FIM_EVENT,KW,DELTA_T,CONSUMODIA_DIA) VALUES ('%s',NOW(),%s,%s,'%s')",$lastdate['DATAHORA'], GetSQLValueString($kwconsumo, 'double'), GetSQLValueString($diferenca, 'double'),$dia);
-            if (!mysqli_query($connect, $insertconsumoSQL)) {
-                $erro=2;
+        $diferenca = dateDifference($lastdate['DATAHORA'], $atualdate['DATAHORA']);
+        //transforma em hora.
+        $diferenca = $diferenca / 3600;
+        echo 'diferenca: ';
+        echo $diferenca;
+
+
+
+        $kwconsumo = ($trms * $crms) * $diferenca;
+
+        echo '    kw: ' . $kwconsumo;
+
+
+        echo '    dia: ' . $dia;
+
+        $insertconsumoSQL = sprintf("INSERT INTO CONSUMO (INICIO_EVENT,FIM_EVENT,KW,DELTA_T,CONSUMODIA_DIA) VALUES ('%s',NOW(),%s,%s,'%s')", $lastdate['DATAHORA'], GetSQLValueString($kwconsumo, 'double'), GetSQLValueString($diferenca, 'double'), $dia);
+        if (!mysqli_query($connect, $insertconsumoSQL)) {
+            $erro = 2;
+        }
+
+//        $mudadia = true;
+//        $mudames = true;
+        $tensaoDoDia = 0;
+        $tensaoDoMes = 0;
+        if ($mudadia == true) {
+            $mudadia = false;
+            $queryselectdia = "SELECT * FROM consumo WHERE DAY(CONSUMODIA_DIA) = DAY( '2016-11-08' - INTERVAL 1 DAY)";
+            $dadosDoDia = mysqli_query($connect, $queryselectdia);
+            $numrow = mysqli_num_rows($dadosDoDia);
+            echo ' numero de linha: ' . $numrow;
+            foreach ($dadosDoDia as $value) {
+                $tensaoDoDia += $value['DELTA_T'];
             }
-            
-            $addconsumoDia = sprintf("update consumodia set KW = KW + %s,DELTA_T = DELTA_T + %s where DIA ='%s'", round(GetSQLValueString($kwconsumo, 'double'),2),round(GetSQLValueString($TENSAO_RMS, 'double'),2),$dia);
+            $tensaoDoDia = $tensaoDoDia / $numrow;
+
+            $addconsumoDia = sprintf("update consumodia set KW = KW + %s,DELTA_T = %s where DIA ='%s'", round(GetSQLValueString($kwconsumo, 'double'), 2), round(GetSQLValueString($tensaoDoDia, 'double'), 2), $dia);
             if (!mysqli_query($connect, $addconsumoDia)) {
-                $erro=33;
+                $erro = 33;
             }
-           
-             $addconsumoMes = sprintf("update consumomes set KW = KW + %s,DETLA_T = DETLA_T + %s where MES ='%s'", round(GetSQLValueString($kwconsumo, 'double'),2),round(GetSQLValueString($TENSAO_RMS, 'double'),2),$mes);
-            if (!mysqli_query($connect, $addconsumoMes)) {
-                $erro=44;
+
+            // exit;
+        }
+        
+        if ($mudames == true) {
+            $mudames = false;
+            $queryselectmes = "SELECT * FROM consumodia WHERE YEAR(CONSUMOMES_MES) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(CONSUMOMES_MES) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)";
+            $dadosDoMes = mysqli_query($connect, $queryselectmes);
+            $numrow = mysqli_num_rows($dadosDoMes);
+            echo ' numero de linha: ' . $numrow;
+            foreach ($dadosDoMes as $value) {
+                $tensaoDoMes += $value['DELTA_T'];
             }
             
-        }
+            $tensaoDoMes = $tensaoDoMes / $numrow;
 
-
-
-
-
-
-        // falta  validar  esse calculod e consumo e  fazer inserir na tabela consumo
-
-        $TETHA = 20;
-        for ($i = 0; $i < 8; $i++) {
-
-            $capturemagnitudetensao = sprintf("INSERT INTO MAGNITUDETENSAO (POS_VETOR,HARMONICA,TETHA,COLETA_COLETA_COD) VALUES (%s,%s,%s,%s)", GetSQLValueString($i, 'int'), GetSQLValueString($powert[$i], 'double'), GetSQLValueString($TETHA, 'double'), GetSQLValueString($lastid, 'int'));
-            $capturemagnitudecorrente = sprintf("INSERT INTO MAGNITUDECORRENTE (POS_VETOR,HARMONICA,TETHA,COLETA_COLETA_COD) VALUES (%s,%s,%s,%s)", GetSQLValueString($i, 'int'), GetSQLValueString($powerc[$i], 'double'), GetSQLValueString($TETHA, 'double'), GetSQLValueString($lastid, 'int'));
-            // mysql_select_db($database_conn, $conn) or die(mysql_error());
-            // $resulttensao = mysqli_query($connect,$capturemagnitudetensao);
-            //$resultcorrente = mysqli_query($connect,$capturemagnitudecorrente);
-            if (!mysqli_query($connect, $capturemagnitudecorrente)) {
-                $erro=3;
+            $addconsumoMes = sprintf("update consumomes set KW = KW + %s,DETLA_T = %s where MES ='%s'", round(GetSQLValueString($kwconsumo, 'double'), 2), round(GetSQLValueString($tensaoDoMes, 'double'), 2), $mes);
+            if (!mysqli_query($connect, $addconsumoMes)) {
+                $erro = 44;
             }
-            if (!mysqli_query($connect, $capturemagnitudetensao)) {
-                $erro=4;
-            }
-            echo '  foi ' . $i;
-        }
 
-
-        if ($erro == 0) {
-            mysqli_commit($connect);
-            echo 'foooooooooooi';
-            echo 'erro = ' . $erro;
-        } else {
-            mysqli_rollback($connect);
-            echo 'erro = ' . $erro;
+            
         }
-        //echo "T=" .round(microtime(true) * 1000);
-        echo "Success!!";
-    } else {
-        echo "Bosta " . $error;
     }
+
+
+    $TETHA = 20;
+    for ($i = 0; $i < 8; $i++) {
+
+        $capturemagnitudetensao = sprintf("INSERT INTO MAGNITUDETENSAO (POS_VETOR,HARMONICA,TETHA,COLETA_COLETA_COD) VALUES (%s,%s,%s,%s)", GetSQLValueString($i, 'int'), GetSQLValueString($powert[$i], 'double'), GetSQLValueString($TETHA, 'double'), GetSQLValueString($lastid, 'int'));
+        $capturemagnitudecorrente = sprintf("INSERT INTO MAGNITUDECORRENTE (POS_VETOR,HARMONICA,TETHA,COLETA_COLETA_COD) VALUES (%s,%s,%s,%s)", GetSQLValueString($i, 'int'), GetSQLValueString($powerc[$i], 'double'), GetSQLValueString($TETHA, 'double'), GetSQLValueString($lastid, 'int'));
+        // mysql_select_db($database_conn, $conn) or die(mysql_error());
+        // $resulttensao = mysqli_query($connect,$capturemagnitudetensao);
+        //$resultcorrente = mysqli_query($connect,$capturemagnitudecorrente);
+        if (!mysqli_query($connect, $capturemagnitudecorrente)) {
+            $erro = 3;
+        }
+        if (!mysqli_query($connect, $capturemagnitudetensao)) {
+            $erro = 4;
+        }
+        echo '  foi ' . $i;
+    }
+
+
+    if ($erro == 0) {
+        mysqli_commit($connect);
+        echo 'foooooooooooi';
+        echo 'erro = ' . $erro;
+    } else {
+        mysqli_rollback($connect);
+        echo 'erro = ' . $erro;
+    }
+    //echo "T=" .round(microtime(true) * 1000);
+    echo "INIDCE 31, FIM! ACABOU, FUNCIONOOOOOOOOOOOOOOOOOOOOOOOOOU, ALELUIA IRMAOS!!!!!!!";
+} else {
+    echo "Bosta " . $error;
+}
 
 
 //mysql_free_result($rsEquipamento);

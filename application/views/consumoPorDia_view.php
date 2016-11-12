@@ -14,18 +14,22 @@
 
 
             </div>
+            
             <div class="col-md-12 col-xs-12">
+                
                 <div class="col-md-8 col-xs-8">
+                      <h2>Graficos</h2>
                     <div class="col-md-6 col-xs-6">
                         <div id="graficotensao" style="width:100%"></div>
-
+                        &nbsp;
+                        <p>OBS: Mude a pagina para  atualizar o grafico</p>
                     </div>
                     <div class="col-md-6 col-xs-6">
                         <div id="graficocorrente" style="width:100%"></div>
 
                     </div>
                     <br>
-                    <p>OBS: So serao mostrados os primeiros 10 dias no grafico.</p>
+                    
                 </div>
 
 
@@ -83,8 +87,8 @@
                 $.each(data.dado, function (key, value) {
                     table.row.add([
                         value.DIA,
-                        value.KW,
-                        value.DELTA_T
+                        value.KW + ' kWh',
+                        value.DELTA_T + ' V'
 
                     ]).draw(false);                   
                    
@@ -236,7 +240,7 @@
 
                 // preenchendo os detalhes do consumo
                 $('#maiorconsumo').html(data.dados.maiorcorrente);
-                $('#menorconsumov').html(data.dados.menorcorrente);
+                $('#menorconsumo').html(data.dados.menorcorrente);
                 $('#maiorconsumov').html(data.dados.maiorcorrente);
                 $('#maiortensaov').html(data.dados.maiortensao);
                 $('#menortensaov').html(data.dados.menortensao);
@@ -246,6 +250,168 @@
 
             }, 'JSON');
         });
+        
+        
+        
+          $(document).on('click', '.paginate_button', function () {
+
+           
+                var optionst = {
+                chart: {
+                    renderTo: 'graficotensao',
+                    type: 'line',
+                    marginBottom: 25
+                },
+                title: {
+                    text: 'Tensao',
+                    x: -20 //center
+                },
+//                subtitle: {
+//                    text: 'data',
+//                    x: -20
+//                },
+                xAxis: {
+                    type: 'datetime',
+           
+                    categories: []
+                },
+                yAxis: {
+                    title: {
+                        text: 'Volts'
+                    },
+                    plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                },
+                
+                legend: {
+                    enabled: false
+//                    layout: 'vertical',
+//                    align: 'right',
+//                    verticalAlign: 'top',
+//                      x: -37,
+//                       y: 25,
+//                    borderWidth: 0
+                },
+                series: []
+            }
+
+
+                //var da series
+                var seriest = {
+                    data: [],
+                    color: 'blue'
+                }
+                var axix = {
+                    categories: [],
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                        month: '%b \'%y'
+                    }
+
+                }
+                var aux = 0;
+
+                //0 e data, 1 e consumo  e 2 e tensao
+                $('#tbodyloco tr').each(function () {
+                    dados = table.row(this).data();
+                    var t = dados[2].split(" ");
+                    //console.log(t[0]);
+                    seriest.data.push(parseFloat(t[0]));
+                    axix.categories.push(dados[0]);
+                });
+                optionst.xAxis.categories = axix['categories'];
+                optionst.series[0] = seriest;
+                chart = new Highcharts.Chart(optionst);
+                
+           
+                 var optionsc = {
+                chart: {
+                    renderTo: 'graficocorrente',
+                    type: 'line',
+                    marginBottom: 25
+                },
+                title: {
+                    text: 'Consumo',
+                    x: -20 //center
+                },
+                subtitle: {
+                    text: '',
+                    x: -20
+                },
+                xAxis: {
+                     type: 'datetime',
+            dateTimeLabelFormats: {
+                day: '%e of %b'
+            },
+                    categories: []
+                },
+                yAxis: {
+                    title: {
+                        text: 'Amperes'
+                    },
+                    plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                },
+//                tooltip: {
+//                    formatter: function () {
+//                        return '<b>' + this.series.name + '</b><br/>' +
+//                                this.x + ': ' + this.y;
+//                    }
+//                },
+                legend: {
+                    enabled: false
+//                    layout: 'vertical',
+//                    align: 'right',
+//                    verticalAlign: 'top',
+//                      x: -37,
+//                       y: 25,
+//                    borderWidth: 0
+                },
+                series: []
+            }
+
+
+
+                //var da series
+                var seriesc = {
+                    data: [],
+                    color: 'red'
+                }
+                var axix = {
+                    categories: [],
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                        month: '%b \'%y'
+                    }
+
+                }
+
+
+                $('#tbodyloco tr').each(function () {
+                    dados = table.row(this).data();
+                    var t = dados[1].split(" ");
+                    //console.log(t[0]);
+                    seriesc.data.push(parseFloat(t[0]));
+                    axix.categories.push(dados[0]);
+                });
+                optionsc.xAxis.categories = axix['categories'];
+                optionsc.series[0] = seriesc;
+                chart = new Highcharts.Chart(optionsc);
+
+
+            
+
+
+
+        });
+        
+        
     });
 
 

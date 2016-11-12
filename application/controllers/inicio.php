@@ -20,8 +20,13 @@ class inicio extends MY_Controller {
 	//carrega a home Página de boas vindas
     public function index() {
         $data['title'] = $this->lang->line('page_title_v_home');
-            $data['headerOption'] = "<link rel='stylesheet' href=" . base_url() . "includes/css/estilo.css>" .
-                    "<link rel='stylesheet' href=" . base_url() . "includes/css/abas.css>";
-        $this->load->template('v_home', $data);
+             $data['headerOption'] = "<link rel='stylesheet' href=" . base_url() . "includes/css/estilo.css>" .
+                    "<link rel='stylesheet' href=" . base_url() . "includes/css/abas.css>" .
+                    "<script src=" . base_url() . "includes/js/highcharts.js></script>".
+                    "<script src=" . base_url() . "includes/js/graficosdetalhes.js></script>" .
+                    "<script src=" . base_url() . "includes/js/funcoesjs.js></script>";
+                    
+                    
+            $this->load->template('grafico_view', $data);
     }
 }

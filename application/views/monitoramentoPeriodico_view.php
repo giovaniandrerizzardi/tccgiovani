@@ -535,7 +535,7 @@
                 jQuery("[name = optradio]").attr('disabled', true);
                 jQuery("[name = optradio2]").attr('disabled', true);
                 jQuery("[name = che]").attr('disabled', true);
-                myvar = setInterval(gerarplot, 5000);
+                myvar = setInterval(gerarplot, 64000);
 
 
 

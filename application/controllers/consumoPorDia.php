@@ -32,9 +32,9 @@ class consumoPorDia extends MY_Controller {
 
         $retorno['dado'] = $this->consumoPorDia_model->getData($dtinicio, $dtfim);
         $retorno['dados']['maiorcorrente']=0;
-        $retorno['dados']['menorcorrente']=0;
+        $retorno['dados']['menorcorrente']= 999999;
         $retorno['dados']['maiortensao']=0;
-        $retorno['dados']['menortensao']=0;
+        $retorno['dados']['menortensao']= 9999999;
         foreach ($retorno['dado'] as $value) {
             if($value->KW >=  $retorno['dados']['maiorcorrente'])
                  $retorno['dados']['maiorcorrente'] = $value->KW;
