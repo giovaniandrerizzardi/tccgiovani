@@ -8,7 +8,7 @@
             <h4 class="form-signin-heading"><?php echo $this->lang->line('endDate') . ":"; ?></h4>
             <input id="enddate" type="date" class="form-control" placeholder="<?php echo $this->lang->line('endDate'); ?>" required name="date">
             <br>
-            <button id="click_me" type="button">Click Me!</button>
+            <button id="click_me" type="button">Buscar!</button>
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
             <div class="col-md-6 col-xs-6">

@@ -3,14 +3,14 @@
     <div class="row-fluid">
         <div class="col-md-10 col-xs-10 col-md-offset-1 " id="borda">
             <h2><?php echo $this->lang->line('consumodia'); ?></h2>
-            <div class="col-md-4 col-xs-4" id="borda">
+            <div class="col-md-3 col-xs-3" id="borda">
 
                 <h4 class="form-signin-heading"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
                 <input id="firstdate" type="date_day" class="form-control" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
                 <h4 class="form-signin-heading"><?php echo $this->lang->line('endDate') . ":"; ?></h4>
                 <input id="enddate" type="date_day" class="form-control" placeholder="<?php echo $this->lang->line('endDate'); ?>" required name="date">
                 <br>
-                <button id="click_me" type="button">Click Me!</button>
+                <button id="click_me" type="button">Buscar!</button>
 
 
             </div>
@@ -118,7 +118,7 @@
                     },
                     yAxis: {
                         title: {
-                            text: 'Amperes'
+                            text: 'Volts'
                         },
                         plotLines: [{
                                 value: 0,
