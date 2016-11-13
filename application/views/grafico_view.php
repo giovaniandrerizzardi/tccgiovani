@@ -5,6 +5,39 @@
             <div class="col-md-10 col-xs-10 col-md-offset-1 " id="borda">
 
 
+                <div class="modal fade  danger" id="MyModal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header alert-warning">
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                <h2 class="modal-title">ALERTA!</h2>
+
+                            </div>
+                            <div class="modal-body">
+
+                                <p>    <?php echo $this->lang->line('date'); ?>: <a id="mdata"></a></p>
+                                <p>    <?php echo $this->lang->line('tipo'); ?>: <a id="mtipoevt"></a></p>
+                                <p>    <?php echo $this->lang->line('tensao'); ?>: <a id="mtensaorms"> V</a></p>
+                                <p>    <?php echo $this->lang->line('corrente'); ?>: <a id="mcorrenterms"> A</a></p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+
+
+
+
+
                 <div class="col-md-5 col-xs-5">
                     <table id="myTable" class="table table-striped table-bordered sortable">
                         <caption><h2><?php echo $this->lang->line('ultevt'); ?></h2></caption>
@@ -80,7 +113,6 @@
         atualizar();
     };
 
-
     function attdelay() {
         tempo = document.getElementById('delay').value;
         clearInterval(myvar);
@@ -109,16 +141,31 @@
             if (data.rgrafico.grafico[0].DATAHORA !== datatest) {
 
 
-                //preenchiment da tabela data.rgrafico.grafico[0].TENSAO_RMS;
+                if (data.rgrafico.grafico[0].TIPO_EVENTO_CODIGO_EVT === "3" || data.rgrafico.grafico[0].TIPO_EVENTO_CODIGO_EVT === "4") {
+                    console.log('e sim');
+                    $('#mdata').html(data.rgrafico.grafico[0].DESCRICAO);
+                    $('#mtipoevt').html(data.rgrafico.grafico[0].DATAHORA);
+                    $('#mtensaorms').html(data.rgrafico.grafico[0].TENSAO_RMS);
+                    $('#mcorrenterms').html(data.rgrafico.grafico[0].CORRENTE_RMS);
+                    $('#MyModal').modal('show');
+                }
 
-                document.getElementById('data').innerHTML = data.rgrafico.grafico[0].DATAHORA;
-                document.getElementById('tipoevt').innerHTML = data.rgrafico.grafico[0].DESCRICAO;
-                document.getElementById('tensaorms').innerHTML = data.rgrafico.grafico[0].TENSAO_RMS + " V";
-                document.getElementById('correnterms').innerHTML = data.rgrafico.grafico[0].CORRENTE_RMS + " A";
                 var phi = data.rgrafico.grafico[0].FI;
-                document.getElementById('fatorp').innerHTML = parseFloat(phi).toFixed(2);
                 var potencia = data.rgrafico.grafico[0].TENSAO_RMS * data.rgrafico.grafico[0].CORRENTE_RMS + " VA";
-                document.getElementById('potencia').innerHTML = potencia;
+                $('#data').html(data.rgrafico.grafico[0].DESCRICAO);
+                $('#tipoevt').html(data.rgrafico.grafico[0].DATAHORA);
+                $('#tensaorms').html(data.rgrafico.grafico[0].TENSAO_RMS);
+                $('#correnterms').html(data.rgrafico.grafico[0].CORRENTE_RMS);
+                $('#fatorp').html(parseFloat(phi).toFixed(2));
+                $('#potencia').html(potencia);
+
+                //document.getElementById('tipoevt').innerHTML = data.rgrafico.grafico[0].DESCRICAO;
+                //document.getElementById('tensaorms').innerHTML = data.rgrafico.grafico[0].TENSAO_RMS + " V";
+                // document.getElementById('correnterms').innerHTML = data.rgrafico.grafico[0].CORRENTE_RMS + " A";
+//                var phi = data.rgrafico.grafico[0].FI;
+//                document.getElementById('fatorp').innerHTML = parseFloat(phi).toFixed(2);
+//                var potencia = data.rgrafico.grafico[0].TENSAO_RMS * data.rgrafico.grafico[0].CORRENTE_RMS + " VA";
+                //document.getElementById('potencia').innerHTML = potencia;
 
                 var optionsTF = {
                     chart: {
