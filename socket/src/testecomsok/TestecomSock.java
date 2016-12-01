@@ -30,7 +30,7 @@ public class TestecomSock {
         try {
             System.out.println("um primeiro teste");
             //capture.php e o meu script original, o captureteste é apenas um teste
-         String url = "http://localhost/script/capture.php";
+         String url = "http://localhost/tccgiovani/script/capture.php";
 //           String url = "http://localhost/script/captureteste.php";
             URL obj;
 

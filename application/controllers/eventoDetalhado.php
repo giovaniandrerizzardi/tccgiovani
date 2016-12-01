@@ -25,10 +25,10 @@ class eventoDetalhado extends MY_Controller {
     }
 
     function getData() {
-        $dtinicio = '2016-09-25';
-        $dtfim = '2016-10-29';
-//        $dtinicio = $_GET['inicio'];
-//        $dtfim = $_GET['fim'];
+//        $dtinicio = '2016-09-25';
+//        $dtfim = '2016-10-29';
+        $dtinicio = $_GET['inicio'];
+        $dtfim = $_GET['fim'];
 
 
         $retorno['dado'] = $this->eventoDetalhado_model->getDados($dtinicio, $dtfim);

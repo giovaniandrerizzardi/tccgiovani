@@ -38,7 +38,7 @@
 
 
 
-                <div class="col-md-5 col-xs-5">
+                <div class="col-md-3 col-xs-3">
                     <table id="myTable" class="table table-striped table-bordered sortable">
                         <caption><h2><?php echo $this->lang->line('ultevt'); ?></h2></caption>
                         <thead>
@@ -62,13 +62,13 @@
                         <tr><td><?php echo $this->lang->line('fatorp'); ?></td>
                             <td id="fatorp">oi</td></tr>
                         <tr><td><?php echo $this->lang->line('potencia'); ?></td>
-                            <td id="potencia">oi</td></tr>
-
+<!--                            <td id="potencia">oi</td></tr>-->
+                                <td>215 VA</td></tr>
                     </table>
                     <?php echo $this->lang->line('att'); ?><input type="number" id="delay" value ="5" onchange="attdelay()"/>
 
                 </div>
-                <div class="col-md-7 col-xs-7"> 
+                <div class="col-md-9 col-xs-9"> 
                     <div class="col-md-12 col-xs-12">
                         <div class="col-md-6 col-xs-6" id="borda2">
                             <div  id="tensaoteste" style="width: '100%'"></div>

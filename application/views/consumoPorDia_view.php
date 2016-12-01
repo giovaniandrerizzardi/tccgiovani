@@ -3,22 +3,24 @@
     <div class="row-fluid">
         <div class="col-md-10 col-xs-10 col-md-offset-1 " id="borda">
             <h2><?php echo $this->lang->line('consumodia'); ?></h2>
-            <div class="col-md-3 col-xs-3" id="borda">
+            <div class="col-md-5 col-xs-5" id="borda">
+                <div class="inline" > 
+                    <h4 class="form-signin-heading pull-left"><?php echo $this->lang->line('firstDate') . ":  "; ?></h4>
+                    <input id="firstdate" type="date_day" class="form-control pull-left" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
 
-                <h4 class="form-signin-heading"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
-                <input id="firstdate" type="date_day" class="form-control" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
-                <h4 class="form-signin-heading"><?php echo $this->lang->line('endDate') . ":"; ?></h4>
-                <input id="enddate" type="date_day" class="form-control" placeholder="<?php echo $this->lang->line('endDate'); ?>" required name="date">
-                <br>
-                <button id="click_me" type="button">Buscar!</button>
+                    <h4 class="form-signin-heading pull-left" style="margin-left:50px" ><?php echo $this->lang->line('endDate') . ":  "; ?></h4>
+                    <input  id="enddate" type="date_day" class="form-control pull-left" placeholder="<?php echo $this->lang->line('endDate'); ?>" required name="date">
+                </div> 
+
+                <button id="click_me" type="button" style="width:80px; height: 30px; margin-left:50px">Buscar!</button>
 
 
             </div>
-            
-            <div class="col-md-12 col-xs-12">
-                
-                <div class="col-md-8 col-xs-8">
-                      <h2>Graficos</h2>
+
+            <div class="col-md-12 col-xs-12" id="borda2">
+
+               
+                    <h2>Graficos</h2>
                     <div class="col-md-6 col-xs-6">
                         <div id="graficotensao" style="width:100%"></div>
                         &nbsp;
@@ -29,12 +31,30 @@
 
                     </div>
                     <br>
-                    
+
+           
+
+
+            </div>
+             <div class="col-md-12 col-xs-12" id="borda2">
+                
+                <div class="col-md-8 col-xs-8">
+                     <h2>Tabela</h2>
+                    <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col1"><?php echo $this->lang->line('Data'); ?></th>
+                                <th class="col2"><?php echo $this->lang->line('Corrente'); ?></th>
+                                <th class="col3"><?php echo $this->lang->line('tensao'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyloco"></tbody>
+
+                    </table>
+
                 </div>
-
-
-
-                <div class="col-md-4 col-xs-4">
+                
+                 <div class="col-md-3 col-xs-3 col-md-offset-1" >
                     <h2> Detalhes do consumo</h2>
 
                     <ul class="list-group">
@@ -46,23 +66,7 @@
                     </ul>
 
                 </div>
-
             </div>
-
-            <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
-                <thead>
-                    <tr>
-                        <th class="col1"><?php echo $this->lang->line('Data'); ?></th>
-                        <th class="col2"><?php echo $this->lang->line('Corrente'); ?></th>
-                        <th class="col3"><?php echo $this->lang->line('tensao'); ?></th>
-                    </tr>
-                </thead>
-               <tbody id="tbodyloco"></tbody>
-
-            </table>
-
-
-
 
 
         </div>
@@ -78,7 +82,7 @@
 
             //get é um ajax  simplificado, mais simples. onde recebe os dados no data
             $.get('http://localhost/tccgiovani/index.php/consumoPorDia/getData', {inicio: dtinicio, fim: dtfim}, function (data) {
-              
+
 
                 //preenche a tabela com os dados
 
@@ -90,8 +94,8 @@
                         value.KW + ' kWh',
                         value.DELTA_T + ' V'
 
-                    ]).draw(false);                   
-                   
+                    ]).draw(false);
+
                 });
 
 
@@ -125,9 +129,9 @@
                                 width: 1,
                                 color: '#808080'
                             }]
-                    },legend: {
-            enabled: false
-        },
+                    }, legend: {
+                        enabled: false
+                    },
                     series: []
                 }
 
@@ -172,8 +176,8 @@
                         }
                     },
                     legend: {
-            enabled: false
-        },
+                        enabled: false
+                    },
                     series: []
                 }
 
@@ -250,13 +254,13 @@
 
             }, 'JSON');
         });
-        
-        
-        
-          $(document).on('click', '.paginate_button', function () {
 
-           
-                var optionst = {
+
+
+        $(document).on('click', '.paginate_button', function () {
+
+
+            var optionst = {
                 chart: {
                     renderTo: 'graficotensao',
                     type: 'line',
@@ -272,7 +276,6 @@
 //                },
                 xAxis: {
                     type: 'datetime',
-           
                     categories: []
                 },
                 yAxis: {
@@ -285,7 +288,6 @@
                             color: '#808080'
                         }]
                 },
-                
                 legend: {
                     enabled: false
 //                    layout: 'vertical',
@@ -299,35 +301,35 @@
             }
 
 
-                //var da series
-                var seriest = {
-                    data: [],
-                    color: 'blue'
+            //var da series
+            var seriest = {
+                data: [],
+                color: 'blue'
+            }
+            var axix = {
+                categories: [],
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    month: '%b \'%y'
                 }
-                var axix = {
-                    categories: [],
-                    type: 'datetime',
-                    dateTimeLabelFormats: {
-                        month: '%b \'%y'
-                    }
 
-                }
-                var aux = 0;
+            }
+            var aux = 0;
 
-                //0 e data, 1 e consumo  e 2 e tensao
-                $('#tbodyloco tr').each(function () {
-                    dados = table.row(this).data();
-                    var t = dados[2].split(" ");
-                    //console.log(t[0]);
-                    seriest.data.push(parseFloat(t[0]));
-                    axix.categories.push(dados[0]);
-                });
-                optionst.xAxis.categories = axix['categories'];
-                optionst.series[0] = seriest;
-                chart = new Highcharts.Chart(optionst);
-                
-           
-                 var optionsc = {
+            //0 e data, 1 e consumo  e 2 e tensao
+            $('#tbodyloco tr').each(function () {
+                dados = table.row(this).data();
+                var t = dados[2].split(" ");
+                //console.log(t[0]);
+                seriest.data.push(parseFloat(t[0]));
+                axix.categories.push(dados[0]);
+            });
+            optionst.xAxis.categories = axix['categories'];
+            optionst.series[0] = seriest;
+            chart = new Highcharts.Chart(optionst);
+
+
+            var optionsc = {
                 chart: {
                     renderTo: 'graficocorrente',
                     type: 'line',
@@ -342,10 +344,10 @@
                     x: -20
                 },
                 xAxis: {
-                     type: 'datetime',
-            dateTimeLabelFormats: {
-                day: '%e of %b'
-            },
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                        day: '%e of %b'
+                    },
                     categories: []
                 },
                 yAxis: {
@@ -378,40 +380,40 @@
 
 
 
-                //var da series
-                var seriesc = {
-                    data: [],
-                    color: 'red'
-                }
-                var axix = {
-                    categories: [],
-                    type: 'datetime',
-                    dateTimeLabelFormats: {
-                        month: '%b \'%y'
-                    }
-
+            //var da series
+            var seriesc = {
+                data: [],
+                color: 'red'
+            }
+            var axix = {
+                categories: [],
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    month: '%b \'%y'
                 }
 
-
-                $('#tbodyloco tr').each(function () {
-                    dados = table.row(this).data();
-                    var t = dados[1].split(" ");
-                    //console.log(t[0]);
-                    seriesc.data.push(parseFloat(t[0]));
-                    axix.categories.push(dados[0]);
-                });
-                optionsc.xAxis.categories = axix['categories'];
-                optionsc.series[0] = seriesc;
-                chart = new Highcharts.Chart(optionsc);
+            }
 
 
-            
+            $('#tbodyloco tr').each(function () {
+                dados = table.row(this).data();
+                var t = dados[1].split(" ");
+                //console.log(t[0]);
+                seriesc.data.push(parseFloat(t[0]));
+                axix.categories.push(dados[0]);
+            });
+            optionsc.xAxis.categories = axix['categories'];
+            optionsc.series[0] = seriesc;
+            chart = new Highcharts.Chart(optionsc);
+
+
+
 
 
 
         });
-        
-        
+
+
     });
 
 

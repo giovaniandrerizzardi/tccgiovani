@@ -1,18 +1,20 @@
 <div class="container-fluid">
     <div class="row-fluid">
 
-        <div class="col-md-3 col-xs-3 mb-30 "id="borda">
+        <div class="col-md-3 col-xs-3 mb-30" id="borda">
+            <div class="inline" > 
+                <h4 class="form-signin-heading pull-left"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
+                <input id="firstdate" type="date" class="form-control pull-left" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
+                <h4 class="form-signin-heading pull-left" style="margin-left:50px"><?php echo $this->lang->line('endDate') . ":"; ?></h4>
+                <input id="enddate" type="date" class="form-control pull-left" placeholder="<?php echo $this->lang->line('endDate'); ?>" required name="date">
+            </div> 
+            <button id="click_me" type="button" style="width:80px; height: 30px; margin-left:50px">Buscar!</button>
 
-            <h4 class="form-signin-heading"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
-            <input id="firstdate" type="date" class="form-control" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
-            <h4 class="form-signin-heading"><?php echo $this->lang->line('endDate') . ":"; ?></h4>
-            <input id="enddate" type="date" class="form-control" placeholder="<?php echo $this->lang->line('endDate'); ?>" required name="date">
-            <br>
-            <button id="click_me" type="button">Buscar!</button>
+
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
             <div class="col-md-6 col-xs-6">
-                  <h2>Tabela</h2>
+                <h2>Tabela</h2>
                 <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
                     <thead>
                         <tr>
@@ -36,7 +38,7 @@
             </div>
 
             <div class="col-md-6 col-xs-6">
-                <div class="col-md-6 col-xs-5">
+                <div class="col-md-4 col-xs-4 col-md-offset-1">
                     <h2> Sumario</h2>
                     <ul class="list-group">   
                         <?php
@@ -51,7 +53,7 @@
                         ?>
 
                 </div>
-                <div class="col-md-6 col-xs-5">
+                <div class="col-md-3 col-xs-3">
                     <h2>Total</h2>
 
                     <ul class="list-group">
@@ -67,44 +69,51 @@
             </div>
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
-            <div class="col-md-6 col-xs-6">
-                <div id="grafico">
+            <div class="col-md-6 col-xs-6 mb-30">
+                <h2>Grafico</h2>
+                <div class="col-md-12 col-xs-12 mb-30">
+                    <div id="grafico">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-3 col-md-offset-1">
+                 <h3>Propriedades do Grafico</h3>
+                <div class="col-md-9 col-xs-9" id="borda2">
+                   
+                    <label class="radio-inline"><input id="grafico_Corrente" type="radio" name="optradiort" checked><?php echo $this->lang->line('graficoCorrente'); ?></label>
+                    <label class="radio-inline"><input id="grafico_Tensao" type="radio" name="optradiort"><?php echo $this->lang->line('graficoTensao'); ?></label>
+                    &nbsp;
+                    &nbsp;
+
+                    <section class="container">
+
+
+
+                        <div>
+                            <select id="leftValues" size="2" multiple></select>
+                        </div>
+                        <div>
+                            <input type="button" id="btnLeft" value="&lt;&lt;" />
+                            <input type="button" id="btnRight" value="&gt;&gt;" />
+                        </div>
+                        <div>
+                            <select id="rightValues" size="10" multiple>
+                                <?php
+                                foreach ($tipoevento as $dados) {
+                                    ?>
+                                    <option><?php echo $dados->DESCRICAO; ?></option>
+                                <?php };
+                                ?>      
+
+                            </select>
+
+                        </div>
+                    </section>
 
                 </div>
             </div>
-         
-            <div class="col-md-3 col-xs-3" id="borda2">
-                <label class="radio-inline"><input id="grafico_Corrente" type="radio" name="optradiort" checked><?php echo $this->lang->line('graficoCorrente'); ?></label>
-                <label class="radio-inline"><input id="grafico_Tensao" type="radio" name="optradiort"><?php echo $this->lang->line('graficoTensao'); ?></label>
-                &nbsp;
-                 &nbsp;
-                
-                <section class="container">
-                    
-                  
-               
-                    <div>
-                        <select id="leftValues" size="2" multiple></select>
-                    </div>
-                    <div>
-                        <input type="button" id="btnLeft" value="&lt;&lt;" />
-                        <input type="button" id="btnRight" value="&gt;&gt;" />
-                    </div>
-                    <div>
-                        <select id="rightValues" size="10" multiple>
-                            <?php
-                            foreach ($tipoevento as $dados) {
-                                ?>
-                                <option><?php echo $dados->DESCRICAO; ?></option>
-                            <?php };
-                            ?>      
 
-                        </select>
-                       
-                    </div>
-                </section>
-
-            </div>
 
         </div>
     </div>
@@ -209,13 +218,13 @@
 //            $('table').DataTable();
 
 
-                
-                
+
+
                 $.each(data.tipos, function (key, value) {
-                  var id = '#' + value.DESCRICAO;
-                   $(id).html(value.quantidade);  
+                    var id = '#' + value.DESCRICAO;
+                    $(id).html(value.quantidade);
                 });
-                
+
                 $('#totaltensao').html(data.dados.totaltensao);
                 $('#totalcorrente').html(data.dados.totalcorrente);
                 $('#maiortensao').html(data.dados.maiortensao);
@@ -253,26 +262,26 @@
                     categories: []
                 },
                 yAxis: [{
-                    title: {
-                        text: 'VOLTS'
-                    },
-                    plotLines: [{
-                            value: 0,
-                            width: 1,
-                            color: '#00FF00'
-                        }]
-                }, {
-                     gridLineWidth: 0,
-                    title: {
-                        text: 'AMPERES'
-                    },
-                    plotLines: [{
-                            value: 0,
-                            width: 1,
-                            color: '#808080'
-                        }],
-                     opposite: true
-                }],
+                        title: {
+                            text: 'VOLTS'
+                        },
+                        plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#00FF00'
+                            }]
+                    }, {
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'AMPERES'
+                        },
+                        plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }],
+                        opposite: true
+                    }],
                 legend: {
                     enabled: false
                 },
@@ -285,10 +294,10 @@
             var series = {
                 data: [],
                 color: 'red',
-                yAxix:1,
-                name:'tensao'
+                yAxix: 1,
+                name: 'tensao'
             };
-           
+
             var axix = {
                 categories: [],
                 type: 'datetime',
@@ -302,38 +311,38 @@
                 // console.log(tipodografico);
                 console.log(this.TENSAO_RMS);
                 if (this.DESCRICAO === tipodografico) {
-                    
+
                     tipodescircao = this.MEDIDOR;
                     // alert(this.toString());
 
                     series.data.push(parseFloat(this.TENSAO_RMS));
                     axix.categories.push(this.DATAHORA);
-                    
+
                 }
 
             });
 
-            if(tipodescircao === 'VOLT'){
+            if (tipodescircao === 'VOLT') {
                 console.log('aki1');
                 series.yAxix = 1;
-                series.name='tensao';
-            }else {
+                series.name = 'tensao';
+            } else {
                 console.log('aki2');
                 series.yAxix = 2;
                 series.color = 'blue';
-                series.name='corrente'
+                series.name = 'corrente'
             }
 
             //plot do grafico de tensao
             options.xAxis.categories = axix['categories'];
             options.series[0] = series;
-           
+
             chart = new Highcharts.Chart(options);
 
         }
 
         function excluirGrafico() {
-             //grafico
+            //grafico
             var options = {
                 chart: {
                     renderTo: 'grafico',
@@ -353,26 +362,26 @@
                     categories: []
                 },
                 yAxis: [{
-                    title: {
-                        text: 'VOLTS'
-                    },
-                    plotLines: [{
-                            value: 0,
-                            width: 1,
-                            color: '#00FF00'
-                        }]
-                }, {
-                     gridLineWidth: 0,
-                    title: {
-                        text: 'AMPERES'
-                    },
-                    plotLines: [{
-                            value: 0,
-                            width: 1,
-                            color: '#808080'
-                        }],
-                     opposite: true
-                }],
+                        title: {
+                            text: 'VOLTS'
+                        },
+                        plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#00FF00'
+                            }]
+                    }, {
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'AMPERES'
+                        },
+                        plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }],
+                        opposite: true
+                    }],
                 legend: {
                     enabled: false
                 },
@@ -385,10 +394,10 @@
             var series = {
                 data: [0],
                 color: 'red',
-                yAxix:1,
-                name:'tensao'
+                yAxix: 1,
+                name: 'tensao'
             };
-           
+
             var axix = {
                 categories: [0],
                 type: 'datetime',
@@ -397,15 +406,15 @@
                 }
 
             };
-            
+
 
 
             //plot do grafico de tensao
             options.xAxis.categories = axix['categories'];
             options.series[0] = series;
-           
+
             chart = new Highcharts.Chart(options);
-          
+
         }
 
 
@@ -471,7 +480,7 @@
                 options.xAxis.categories = axix['categories'];
                 options.series[0] = series;
                 chart = new Highcharts.Chart(options);
-                
+
             } else {
                 var options = {
                     chart: {

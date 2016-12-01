@@ -2,39 +2,59 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="col-md-10 col-xs-10 col-md-offset-1 " id="borda">
-             <h2><?php echo $this->lang->line('consumomes'); ?></h2>
-            <div class="col-md-3 col-xs-3" id="borda2">
-
-                <h4 class="form-signin-heading"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
-                <input id="firstdate" type="date_month" class="form-control" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
-                <h4 class="form-signin-heading"><?php echo $this->lang->line('endDate') . ":"; ?></h4>
-                <input id="enddate" type="date_month" class="form-control" placeholder="<?php echo $this->lang->line('endDate'); ?>" required name="date">
-                <br>
-                <button id="click_me" type="button">Click Me!</button>
+            <h2><?php echo $this->lang->line('consumomes'); ?></h2>
+            <div class="col-md-5 col-xs-5" id="borda">
+                <div class="inline" > 
+                    <h4 class="form-signin-heading pull-left"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
+                    <input id="firstdate" type="date_month" class="form-control pull-left" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
+                    <h4 class="form-signin-heading pull-left" style="margin-left:50px"><?php echo $this->lang->line('endDate') . ":"; ?></h4>
+                    <input id="enddate" type="date_month" class="form-control pull-left" placeholder="<?php echo $this->lang->line('endDate'); ?>" required name="date">
+                </div> 
+                <button id="click_me" type="button" style="width:80px; height: 30px; margin-left:50px">Buscar!</button>
 
 
             </div>
-            <div class="col-md-12 col-xs-12">
+            <div class="col-md-12 col-xs-12" id="borda2">
 
-                <div class="col-md-8 col-xs-8" >
-                    <h2>Graficos</h2>
-                    <div class="col-md-6 col-xs-6">
-                        <div id="graficotensao" style="width:100%"></div>
-                        
-                        &nbsp;
-                        <p>OBS: Mude a pagina para  atualizar o grafico</p>
-                    </div>
-                    <div class="col-md-6 col-xs-6">
-                        <div id="graficocorrente" style="width:100%"></div>
 
-                    </div>
-                    <br>
+                <h2>Graficos</h2>
+                <div class="col-md-6 col-xs-6">
+                    <div id="graficotensao" style="width:100%"></div>
+
+                    &nbsp;
+                    <p>OBS: Mude a pagina para  atualizar o grafico</p>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                    <div id="graficocorrente" style="width:100%"></div>
+
+                </div>
+                <br>
+
+
+
+
+
+
+
+            </div>
+            <div class="col-md-12 col-xs-12" id="borda2">
+                <div class="col-md-8 col-xs-8">
+                    <h2>Tabela</h2>
+                    <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
+                        <thead>
+                            <tr>
+
+                                <th class="col1" ><?php echo $this->lang->line('Data'); ?></th>
+                                <th class="col2" ><?php echo $this->lang->line('Corrente'); ?></th>
+                                <th class="col3" ><?php echo $this->lang->line('tensao'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyloco"></tbody>
+                    </table>
 
                 </div>
 
-
-
-                <div class="col-md-4 col-xs-4">
+                <div class="col-md-3 col-xs-3 col-md-offset-1" >
                     <h2> Detalhes do consumo</h2>
 
                     <ul class="list-group">
@@ -46,21 +66,6 @@
                     </ul>
 
                 </div>
-
-            </div>
-            <div class="col-md-12 col-xs-12">
-                <h2>Tabela</h2>
-                <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
-                    <thead>
-                        <tr>
-
-                            <th class="col1" ><?php echo $this->lang->line('Data'); ?></th>
-                            <th class="col2" ><?php echo $this->lang->line('Corrente'); ?></th>
-                            <th class="col3" ><?php echo $this->lang->line('tensao'); ?></th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbodyloco"></tbody>
-                </table>
             </div>
 
 

@@ -1,18 +1,20 @@
 <div class="container-fluid">
     <div class="row-fluid">
 
-        <div class="col-md-3 col-xs-3 mb-30 "id="borda">
+         <div class="col-md-3 col-xs-3 mb-30" id="borda">
+                <div class="inline" > 
+                    <h4 class="form-signin-heading pull-left"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
+                    <input id="firstdate" type="date" class="form-control pull-left" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
+                    <h4 class="form-signin-heading pull-left" style="margin-left:50px"><?php echo $this->lang->line('endDate') . ":"; ?></h4>
+                    <input id="enddate" type="date" class="form-control pull-left" placeholder="<?php echo $this->lang->line('endDate'); ?>" required name="date">
+                </div> 
+                <button id="click_me" type="button" style="width:80px; height: 30px; margin-left:50px">Buscar!</button>
 
-            <h4 class="form-signin-heading"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
-            <input id="firstdate" type="date" class="form-control" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
-            <h4 class="form-signin-heading"><?php echo $this->lang->line('endDate') . ":"; ?></h4>
-            <input id="enddate" type="date" class="form-control" placeholder="<?php echo $this->lang->line('endDate'); ?>" required name="date">
-            <br>
-            <button id="click_me" type="button">Buscar!</button>
-        </div>
+
+            </div>
         <div class="col-md-12 col-xs-12" id="borda">
             <div class="col-md-6 col-xs-6">
-
+                 <h2>Tabela</h2>
                 <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
                     <thead>
                         <tr>
@@ -28,7 +30,8 @@
 
             </div>
 
-            <div class="col-md-6 col-xs-6" id="tabelaDireita">
+            <div class="col-md-4 col-xs-4" id="tabelaDireita">
+                 <h2>Propriedades</h2>
                 <div class="col-md-12 col-xs-12" id="borda">
 
                     <label class="radio-inline"><input id="grafico_Corrente" type="radio" name="optradiort" checked><?php echo $this->lang->line('graficoCorrente'); ?></label>
@@ -91,7 +94,8 @@
             </div>
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
-            <div class="col-md-10 col-xs-10 col-md-offset-1">
+            <div class="col-md-10 col-xs-10">
+                 <h2>Grafico</h2>
                 <div id="grafico">
 
                 </div>
