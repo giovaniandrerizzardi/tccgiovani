@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 2016
+ * Desenvolvido por: Giovani André Rizzardi
+ * Email: giovanirizzardi@gmail.com
+ * Projeto de conclusão de curso
+ * UPF - Ciência da Computação
+ */
 class sensor extends MY_Controller {
 
 	public function __construct()

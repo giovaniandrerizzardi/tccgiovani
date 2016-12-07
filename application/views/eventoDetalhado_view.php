@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row-fluid">
 
-        <div class="col-md-3 col-xs-3 mb-30" id="borda">
+        <div class="col-md-7 col-xs-7 mb-30" id="borda">
             <div class="inline" > 
                 <h4 class="form-signin-heading pull-left"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
                 <input id="firstdate" type="date" class="form-control pull-left" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
             <div class="col-md-6 col-xs-6">
-                <h2>Tabela</h2>
+                <h2><?php echo $this->lang->line('tabela'); ?></h2>
                 <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
                     <thead>
                         <tr>
@@ -39,7 +39,7 @@
 
             <div class="col-md-6 col-xs-6">
                 <div class="col-md-4 col-xs-4 col-md-offset-1">
-                    <h2> Sumario</h2>
+                    <h2> <?php echo $this->lang->line('sumario'); ?></h2>
                     <ul class="list-group">   
                         <?php
                         foreach ($tipoevento as $dados) {
@@ -54,15 +54,15 @@
 
                 </div>
                 <div class="col-md-3 col-xs-3">
-                    <h2>Total</h2>
+                    <h2><?php echo $this->lang->line('total'); ?></h2>
 
                     <ul class="list-group">
-                        <li class="list-group-item">Tensao: <a id="totaltensao"></a></li>
-                        <li class="list-group-item">Corrente: <a id="totalcorrente"></a></li>
-                        <li class="list-group-item">Maior Tensao: <a id="maiortensao"></a></li>
-                        <li class="list-group-item">Maior Corrente: <a id="maiorcorrente"></a></li>
-                        <li class="list-group-item">Menor Tensao: <a id="menortensao"></a></li>
-                        <li class="list-group-item">Menor Corrente: <a id="menorcorrente"></a></li>
+                        <li class="list-group-item"><?php echo $this->lang->line('tensao'); ?>: <a id="totaltensao"></a></li>
+                        <li class="list-group-item"><?php echo $this->lang->line('corrente'); ?>: <a id="totalcorrente"></a></li>
+                        <li class="list-group-item"><?php echo $this->lang->line('maiortensao'); ?>: <a id="maiortensao"></a></li>
+                        <li class="list-group-item"><?php echo $this->lang->line('maiorcorrente'); ?>: <a id="maiorcorrente"></a></li>
+                        <li class="list-group-item"><?php echo $this->lang->line('menortensao'); ?>: <a id="menortensao"></a></li>
+                        <li class="list-group-item"><?php echo $this->lang->line('menorcorrente'); ?>: <a id="menorcorrente"></a></li>
                     </ul>
                 </div>
 
@@ -70,7 +70,7 @@
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
             <div class="col-md-6 col-xs-6 mb-30">
-                <h2>Grafico</h2>
+                <h2><?php echo $this->lang->line('grafico'); ?></h2>
                 <div class="col-md-12 col-xs-12 mb-30">
                     <div id="grafico">
 
@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-xs-3 col-md-offset-1">
-                 <h3>Propriedades do Grafico</h3>
+                 <h3><?php echo $this->lang->line('pgrafico'); ?></h3>
                 <div class="col-md-9 col-xs-9" id="borda2">
                    
                     <label class="radio-inline"><input id="grafico_Corrente" type="radio" name="optradiort" checked><?php echo $this->lang->line('graficoCorrente'); ?></label>

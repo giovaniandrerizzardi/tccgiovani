@@ -3,7 +3,7 @@
     <div class="row-fluid">
         <div class="col-md-10 col-xs-10 col-md-offset-1 " id="borda">
             <h2><?php echo $this->lang->line('consumomes'); ?></h2>
-            <div class="col-md-5 col-xs-5" id="borda">
+            <div class="col-md-7 col-xs-7" id="borda">
                 <div class="inline" > 
                     <h4 class="form-signin-heading pull-left"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
                     <input id="firstdate" type="date_month" class="form-control pull-left" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
@@ -17,12 +17,12 @@
             <div class="col-md-12 col-xs-12" id="borda2">
 
 
-                <h2>Graficos</h2>
+                <h2><?php echo $this->lang->line('grafico'); ?></h2>
                 <div class="col-md-6 col-xs-6">
                     <div id="graficotensao" style="width:100%"></div>
 
                     &nbsp;
-                    <p>OBS: Mude a pagina para  atualizar o grafico</p>
+                    <p><?php echo $this->lang->line('dadosnografico'); ?></p>
                 </div>
                 <div class="col-md-6 col-xs-6">
                     <div id="graficocorrente" style="width:100%"></div>
@@ -39,7 +39,7 @@
             </div>
             <div class="col-md-12 col-xs-12" id="borda2">
                 <div class="col-md-8 col-xs-8">
-                    <h2>Tabela</h2>
+                    <h2><?php echo $this->lang->line('tabela'); ?></h2>
                     <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
                         <thead>
                             <tr>
@@ -55,14 +55,14 @@
                 </div>
 
                 <div class="col-md-3 col-xs-3 col-md-offset-1" >
-                    <h2> Detalhes do consumo</h2>
+                     <h2><?php echo $this->lang->line('detalheconsumo'); ?></h2>
 
                     <ul class="list-group">
-                        <li class="list-group-item">Maior consumo: <a id="maiorconsumo"></a></li>
-                        <li class="list-group-item">Menor consumo: <a id="menorconsumo"></a></li>
-                        <li class="list-group-item">Variaçao de consumo: <a id="menorconsumov"></a> - <a id="maiorconsumov"></a> </li>
-                        <li class="list-group-item">Variaçao de Tensao: <a id="menortensaov"></a> - <a id="maiortensaov"></a></li>
-                        <li class="list-group-item">Maior Tensao: <a id="maiortensao"></a></li>
+                        <li class="list-group-item"><?php echo $this->lang->line('maiorconsumo') . ":  "; ?> <a id="maiorconsumo"></a></li>
+                        <li class="list-group-item"><?php echo $this->lang->line('menorconsumo') . ":  "; ?> <a id="menorconsumo"></a></li>
+                        <li class="list-group-item"><?php echo $this->lang->line('variacaoconsumo') . ":  "; ?> <a id="menorconsumov"></a> - <a id="maiorconsumov"></a> </li>
+                        <li class="list-group-item"><?php echo $this->lang->line('variacaotensao') . ":  "; ?> <a id="menortensaov"></a> - <a id="maiortensaov"></a></li>
+                        <li class="list-group-item"><?php echo $this->lang->line('maiortensao') . ":  "; ?> <a id="maiortensao"></a></li>
                     </ul>
 
                 </div>

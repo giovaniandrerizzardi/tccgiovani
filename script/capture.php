@@ -1,6 +1,12 @@
 <?php require_once("conn.php"); ?>
 <?php
-
+/**
+ * 2016
+ * Desenvolvido por: Giovani André Rizzardi
+ * Email: giovanirizzardi@gmail.com
+ * Projeto de conclusão de curso
+ * UPF - Ciência da Computação
+ */
 //include 'BigDecimal.php';
 include 'funcoes.php';
 //include 'banco.php';

@@ -1,15 +1,14 @@
 
 <?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
- * 2015
- * Desenvolvido por: Mateus Perego
- * Email: mateusperego@yahoo.com.br
+ * 2016
+ * Desenvolvido por: Giovani André Rizzardi
+ * Email: giovanirizzardi@gmail.com
  * Projeto de conclusão de curso
  * UPF - Ciência da Computação
  */
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Login extends MY_Controller {
 
     public $infoDb;

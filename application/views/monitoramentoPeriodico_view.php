@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row-fluid">
 
-         <div class="col-md-3 col-xs-3 mb-30" id="borda">
+         <div class="col-md-7 col-xs-7 mb-30" id="borda">
                 <div class="inline" > 
                     <h4 class="form-signin-heading pull-left"><?php echo $this->lang->line('firstDate') . ":"; ?></h4>
                     <input id="firstdate" type="date" class="form-control pull-left" placeholder="<?php echo $this->lang->line('firstDate'); ?>" required name="date">
@@ -14,7 +14,7 @@
             </div>
         <div class="col-md-12 col-xs-12" id="borda">
             <div class="col-md-6 col-xs-6">
-                 <h2>Tabela</h2>
+                 <h2><?php echo $this->lang->line('tabela'); ?></h2>
                 <table id="tabelaseventos" class="table table-bordered table-condensed table-striped">
                     <thead>
                         <tr>
@@ -31,7 +31,7 @@
             </div>
 
             <div class="col-md-4 col-xs-4" id="tabelaDireita">
-                 <h2>Propriedades</h2>
+                 <h2><?php echo $this->lang->line('propriedades'); ?></h2>
                 <div class="col-md-12 col-xs-12" id="borda">
 
                     <label class="radio-inline"><input id="grafico_Corrente" type="radio" name="optradiort" checked><?php echo $this->lang->line('graficoCorrente'); ?></label>
@@ -48,7 +48,7 @@
 
                     <div class="checkbox">
                         <label>
-                            valor no grafico: <input id="valoresNoGrafico" type="number"  value ="15" style="width: 60px;">
+                            <?php echo $this->lang->line('valornografico'); ?>: <input id="valoresNoGrafico" type="number"  value ="15" style="width: 60px;">
                         </label>
                     </div>
 
@@ -57,34 +57,34 @@
                 <div class="col-md-12 col-xs-12" id="borda">
                     <div class="col-md-6 col-xs-6">
                         <div class="checkbox">
-                            <label><input id="agruparValores" type="checkbox" value="">Agrupar Valores</label>
+                            <label><input id="agruparValores" type="checkbox" value=""><?php echo $this->lang->line('agruparvalor'); ?></label>
                         </div>
                         <div class="radio">
-                            <label><input id="radioMedia" type="radio" name="optradio">Media</label>
+                            <label><input id="radioMedia" type="radio" name="optradio"><?php echo $this->lang->line('media'); ?></label>
                         </div>
                         <div class="radio">
-                            <label><input id="radioMaior" type="radio" name="optradio">Maior</label>
+                            <label><input id="radioMaior" type="radio" name="optradio"><?php echo $this->lang->line('maior'); ?></label>
                         </div>
                         <div class="radio">
-                            <label><input id="radioMenor" type="radio" name="optradio">Menor</label>
+                            <label><input id="radioMenor" type="radio" name="optradio"><?php echo $this->lang->line('menor'); ?></label>
                         </div>
                     </div>
                     <div class="col-md-6 col-xs-6 well">
                         <div class="checkbox">
                             <label>
-                                Periodo: <input id="periodo" type="number"  value ="5" name="che" style="width: 60px;">
+                                <?php echo $this->lang->line('periodo'); ?>: <input id="periodo" type="number"  value ="5" name="che" style="width: 60px;">
                             </label>
                         </div>
                         <div class="radio">
-                            <label><input id="radioMinuto" type="radio" name="optradio2">Minuto</label>
+                            <label><input id="radioMinuto" type="radio" name="optradio2"><?php echo $this->lang->line('minuto'); ?></label>
                         </div>
                         <div class="radio">
-                            <label><input id="radioHora" type="radio" name="optradio2">Hora</label>
+                            <label><input id="radioHora" type="radio" name="optradio2"><?php echo $this->lang->line('hora'); ?></label>
                         </div>
                         <div class="radio">
-                            <label><input id="radioDia" type="radio" name="optradio2">Dia</label>
+                            <label><input id="radioDia" type="radio" name="optradio2"><?php echo $this->lang->line('dia'); ?></label>
                         </div>
-                        <button id="attbutton" type="button"  name="che">atualizar!</button>
+                        <button id="attbutton" type="button"  name="che"><?php echo $this->lang->line('atualizar'); ?>!</button>
 
                     </div>
 
@@ -95,7 +95,7 @@
         </div>
         <div class="col-md-12 col-xs-12" id="borda">
             <div class="col-md-10 col-xs-10">
-                 <h2>Grafico</h2>
+                 <h2><?php echo $this->lang->line('grafico'); ?></h2>
                 <div id="grafico">
 
                 </div>
@@ -107,7 +107,7 @@
 </div>
 
 
-<script type="text/javascript">
+<script type="text/javascript">   
     $(document).ready(function () {
         var dataImp;
         var dataagroup;

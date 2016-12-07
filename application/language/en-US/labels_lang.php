@@ -8,6 +8,13 @@ $lang["insert"] = "Inserir";
 $lang["clean_up"] = "Limpar";
 $lang["cancel"] = "Cancelar";
 $lang["alter"] = "Alterar";
+$lang["dadosnografico"] = "OBS: Mude a pagina para  atualizar o grafico";
+$lang["tabela"] = "Tabela";
+$lang["grafico"] = "Grafico";
+$lang["alerta"] = "ALERTA!";
+$lang["propriedades"] = "Propriedades";
+$lang["valornografico"] = "Valores no Grafico";
+
 
 //consumo
 $lang["page_title_consume"] = "Consumo";
@@ -18,18 +25,42 @@ $lang["Data"] = "Data";
 $lang["Corrente"] = "Consumo";
 $lang["consumodia"] = "Consumo Dia";
 $lang["consumomes"] = "Consumo Mes/Ano";
+$lang["detalheconsumo"] = "Detalhes do consumo";
 
+$lang["maiorconsumo"] = "Maior Consumo";
+$lang["menorconsumo"] = "Menor Consumo";
+$lang["maiortensao"] = "Maior Tensão";
+$lang["menortensao"] = "Menor Tensão";
+$lang["variacaotensao"] = "Variação da Tensão";
+$lang["variacaoconsumo"] = "Variação do Consumo";
 
 // monitorameno periodico
 $lang["graficoCorrente"] = " grafico Corrente";
 $lang["graficoTensao"] = " grafico Tensao";
 $lang["attAut"] = "Atualizar Automaticamente";
 $lang["consumo"] = "Consumo";
+$lang["agruparvalor"] = "Agrupar Valores";
+$lang["maior"] = "Maior";
+$lang["menor"] = "Menor";
+$lang["media"] = "Media";
+$lang["dia"] = "Dia";
+$lang["hora"] = "Hora";
+$lang["minuto"] = "Minuto";
+$lang["periodo"] = "Periodo";
+$lang["atualizar"] = "Atualizar";
 //evetosdetalhados
 $lang["Data"] = "Data";
 $lang["tipoevento"] = "Tipo";
 $lang["fatorpotencia"] = "Fator de Potencia";
 $lang["potencia"] = "Potencia";
+$lang["sumario"] = "Sumario";
+$lang["total"] = "Total";
+$lang["tensao"] = "Tensão";
+$lang["corrente"] = "Corrente";
+$lang["maiorcorrente"] = "Maior Corrente";
+$lang["menorcorrente"] = "Menor Corrente";
+$lang["pgrafico"] = "Propriedades do Grafico";
+
 //menu
 $lang["consumerday"] = "consumo Dia";
 $lang["consumermon"] = "consumo Mes";

@@ -14,7 +14,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
 
-                                <h2 class="modal-title">ALERTA!</h2>
+                                <h2 class="modal-title"><?php echo $this->lang->line('alerta'); ?>!</h2>
 
                             </div>
                             <div class="modal-body">
@@ -62,8 +62,8 @@
                         <tr><td><?php echo $this->lang->line('fatorp'); ?></td>
                             <td id="fatorp">oi</td></tr>
                         <tr><td><?php echo $this->lang->line('potencia'); ?></td>
-<!--                            <td id="potencia">oi</td></tr>-->
-                                <td>215 VA</td></tr>
+                            <td id="potencia">oi</td></tr>
+                                
                     </table>
                     <?php echo $this->lang->line('att'); ?><input type="number" id="delay" value ="5" onchange="attdelay()"/>
 

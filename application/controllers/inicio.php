@@ -1,12 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * 2016
+ * Desenvolvido por: Giovani André Rizzardi
+ * Email: giovanirizzardi@gmail.com
+ * Projeto de conclusão de curso
+ * UPF - Ciência da Computação
+ */
 class inicio extends MY_Controller {
-	/**
-	* 2015
-	* Desenvolvido por: Mateus Perego
-	* Email: mateusperego@yahoo.com.br
-	* Projeto de conclusão de curso
-	* UPF - Ciência da Computação
-	*/	
+	
 	//Como este controller estende o MY_Controller, que é onde está a verificação de login e senha, então aqui você não precisa
 	//fazer nenhuma verifição se o usuário está logado.
 	//Lembre-se: os controllers que você deseja proteger, devem estender o MY_Controller. 
