@@ -17,8 +17,6 @@ class monitoramentoPeriodico extends MY_Controller {
 
     public function index() {
 
-        // $data['tipoevento'] = $this->monitoramentoPeriodico_model->getMon();
-
         $data['title'] = $this->lang->line('page_title_consume');
         $data['headerOption'] = "<link rel='stylesheet' href=" . base_url() . "includes/css/estilo.css>" .
                 "<link rel='stylesheet' href=" . base_url() . "includes/css/abas.css>" .
@@ -35,14 +33,7 @@ class monitoramentoPeriodico extends MY_Controller {
 //     $dtfim = '2016-10-30';
         $dtinicio = $_GET['inicio'];
         $dtfim = $_GET['fim'];
-
-
         $retorno['dado'] = $this->monitoramentoPeriodico_model->getMon($dtinicio, $dtfim);
-
-
-
-
-
         echo json_encode($retorno);
         exit;
     }
@@ -50,14 +41,7 @@ class monitoramentoPeriodico extends MY_Controller {
     function calcula() {
         $debug = false;
         if (!$debug) {
-              
-//            $agrupador = $_GET['agrupador'];
-//            $tipodata = $_GET['tipodata'];
-//            //$periodo = $_GET['periodo'];
-//            $data = $_GET['dados'];
-//            $dtinicio = $_GET['inicio'];
-//            $dtfim = $_GET['fim'];
-            
+
             $agrupador =  filter_input_array(INPUT_POST)['agrupador'];
             $tipodata =  filter_input_array(INPUT_POST)['tipodata'];
             //$periodo = $_GET['periodo'];
